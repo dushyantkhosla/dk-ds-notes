@@ -15,6 +15,8 @@ sudo apt install -y \
 git config --global user.email "dushyant.khosla@yahoo.com"
 git config --global user.name "Dushyant Khosla"
 
+
+# https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
 # generate SSH keys
 ssh-keygen -t rsa -b 4096 -C "dushyant.khosla@yahoo.com"
 eval "$(ssh-agent -s)"
@@ -22,6 +24,9 @@ ssh-add ~/.ssh/id_rsa
 
 # paste on github.com settings
 cat ~/.ssh/id_rsa.pub | xclip
+
+# verify 
+ssh -T git@github.com
 
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
