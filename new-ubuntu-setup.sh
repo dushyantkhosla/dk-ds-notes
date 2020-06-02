@@ -12,6 +12,17 @@ sudo apt install -y \
 		youtube-dl \
 		snapd
 
+git config --global user.email "dushyant.khosla@yahoo.com"
+git config --global user.name "Dushyant Khosla"
+
+# generate SSH keys
+ssh-keygen -t rsa -b 4096 -C "dushyant.khosla@yahoo.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+
+# paste on github.com settings
+cat ~/.ssh/id_rsa.pub | xclip
+
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
