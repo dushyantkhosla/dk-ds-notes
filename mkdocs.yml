@@ -1,0 +1,80 @@
+site_name: Personal Notes
+site_url: https://dushyantkhosla.github.io/dk-ds-notes/
+site_author: Dushyant Khosla
+site_description: >-
+  Notes on Data Science.
+repo_name: dushyantkhosla/dk-ds-notes
+repo_url: https://github.com/dushyantkhosla/dk-ds-notes
+
+copyright: Copyright &copy; 2020 Dushyant Khosla
+
+theme:
+  name: material
+  include_search_page: false
+  search_index_only: true
+  language: en
+  features:
+    - tabs
+  palette:
+    primary: deep orange
+    scheme: default
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Bash: bash4ds.md
+  - Airflow: airflow4ds.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/dushyantkhosla
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/u/dushyantkhosla
+    - icon: fontawesome/solid/paper-plane
+      link: mailto:<dushyantkhosla320@gmail.com>
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/dushyant-khosla/
+    - icon: fontawesome/brands/instagram
+      link: https://instagram.com/dushyantkhosla
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.attr_list
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
