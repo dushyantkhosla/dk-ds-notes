@@ -28,7 +28,6 @@ plugins:
 nav:
   - Home: index.md
   - Bash: bash4ds.md
-  - Airflow: airflow4ds.md
 
 extra:
   social:
