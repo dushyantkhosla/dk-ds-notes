@@ -50,7 +50,7 @@ Commands like `cat`, `head`, `tail` and most commonly `less` are useful for insp
 When inspecting directories with `ls -l` we sometimes see the filenames followed by a `->` notation.
 For example:
 
-```bash
+```
 lrwxrwxrwx     25 Jul  3 16:42 System.map -> /boot/System.map-2.0.36-3
 -rw-r--r-- 105911 Oct 13  1998 System.map-2.0.36-0.7
 ```
@@ -72,7 +72,7 @@ Commands can be one of 4 different kinds:
 
 Most commands have the syntax
 
-```bash
+```
 command -options arguments
 ```
 
@@ -84,7 +84,7 @@ where
 
 For example,
 
-```bash
+```
 ls -la /usr/bin
 ```
 
@@ -107,7 +107,7 @@ Some commands use different exit status values to provide diagnostics for errors
 
 ### Inspecting Commands
 
-```bash
+```
 type, which, help, man
 ```
 
@@ -184,7 +184,7 @@ Each time you type a command and hit return, bash *expands* the text to unpack w
 
 ### 03-1 Wildcards
 
-```bash
+```
 $ echo *
 ```
 
@@ -193,7 +193,7 @@ will not return "*" as you might think. The wildcard * will be expanded into fil
 The mechanism by which wildcards work is called *pathname expansion*.
 Try out the following
 
-```bash
+```
 echo D*
 echo *s
 echo [[:upper:]]*
@@ -208,7 +208,7 @@ Similar to "*", the "~" wildcard is expanded into the pathname for your Home dir
 
 The shell allows arithmetic to be performed by expansion. This allow us to use the shell prompt as a calculator. Arithmetic expansion uses the form `	$((expression))` where *expression* is an arithmetic expression consisting of integer values and arithmetic operators.
 
-```bash
+```
 echo $(((5**2)*3))
 echo Five by two is $((5/2)) leaving a remainder of $((5%2))
 ```
@@ -217,7 +217,7 @@ echo Five by two is $((5/2)) leaving a remainder of $((5%2))
 
 With it, you can create multiple text strings from a pattern containing braces. The brace expression itself may contain either a comma-separated list of strings, or a range of integers or single characters. The pattern may not contain embedded whitespace.
 
-```bash
+```
 $ echo Front-{A,B,C}-Back
 # Front-A-Back Front-B-Back Front-C-Back
 
@@ -233,7 +233,7 @@ $ echo a{A{1,2},B{3,4}}b
 
  The most common application is to make lists of files or directories to be created. For example, to create directories to hold data by month;
 
-```bash
+```
 $ mkdir {2007..2009}-0{1..9} {2007..2009}-{10..12}
 $ ls
 
@@ -251,7 +251,7 @@ $ ls
 
 The Linux system is able to store data inside *variables* that can be referenced on the CLI or inside scripts. You can inspect the list of *global variables* by running `printenv` or just `env`. To access the value inside a parameter/variable, we use the "$" notation.
 
-```bash
+```
 $ printenv
 $ echo $USER $HOME
 ```
@@ -270,7 +270,7 @@ $ echo $USER $HOME
 
 Using the syntax `$(command)` we can use the output of a command as an expansion.
 
-```bash
+```
 $ ls -l $(which python)
 # alternatively
 $ ls -l `which python`
@@ -283,7 +283,7 @@ $ ls -l `which python`
 - If you place text inside double quotes, all the special characters used by the shell lose their special meaning and are treated as ordinary characters.
 - Exceptions are dollar, backslash and back-quote. Hence, parameter expansion, arithmetic expansion, and command substitution still take place within double quotes.
 
-```bash
+```
 $ mv "file with spaces in its name.txt" file_with_spaces_in_its_name.txt
 $ echo "$USER $((2+2)) $(cal)"
 
@@ -300,7 +300,7 @@ $ echo "$(cal)"
 
 These are useful when you wish to suppress all expansions.
 
-```bash
+```
 $ echo text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER
 text /home/me/ls-output.txt a b foo 4 me
 $ echo "text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER"
@@ -313,14 +313,14 @@ text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER
 
 To quote a single character, precede it character with a backslash. Often this is done inside double quotes to selectively prevent an expansion. It is also common to use escaping to eliminate the special meaning of a character in a filename (special characters are allowed in filenames, but using anything other than underscores is considered bad practice.) To allow a backslash character to appear, use the double-backslash.
 
-```bash
+```
 $ echo "The balance for user $USER is: \$5.00"
 # The balance for user dkhosla is: $5.00
 ```
 
 Handy backslash trick: Use a backslash at the end of a line to get the shell to ignore a newline character.
 
-```bash
+```
 $ ls -l \
    --reverse \
    --human-readable \
@@ -336,7 +336,7 @@ Backslashes are also used to insert special characters into our text. These are 
 - `\a` for alerts (makes terminal beep),
 - `\\` to insert a backslash.
 
-```bash
+```
 $ echo -e "Inserting several blank lines\n\n\n"
 Inserting several blank lines
 
@@ -369,7 +369,7 @@ Linux systems are *multi-user*, meaning that more than one user can be operating
 - Each file and directory is assigned access rights for (1) the **owner** of the file, (2) the **members of a group** of related users, and (3) **everybody else**.
 - Rights can be assigned to **read** a file, to **write** a file, and to **execute** a file (i.e., run the file as a program).
 
-```bash
+```
 $ ls -l /bin/bash
 -rwxr-xr-x 1 root root  316848 Feb 27  2000 /bin/bash
 ```
@@ -384,7 +384,7 @@ Here we can see:
 
 To interpret the 10-character permissions string, we break it down into sets of 1, 3, 3 and 3
 
-```bash
+```
 - rwx rwx rwx
 File type, - for a regular file and "d" for a directory
 	Read, write, execute permissions for file owner
@@ -398,7 +398,7 @@ The `chmod` command is used to change the permissions of a file or directory. To
 
 Using the Octal system,
 
-```bash
+```
 rwx rwx rwx = 111 111 111
 rw- rw- rw- = 110 110 110
 rwx --- --- = 111 000 000
@@ -413,7 +413,7 @@ r-- = 100 in binary = 4
 
 For example, if we wanted to set `some_file` to have read and write permission for the owner, but wanted to keep the file private from others, we would:
 
-```bash
+```
 $ chmod 600 some_file
 ```
 
@@ -450,7 +450,7 @@ Here are some useful settings for directories:
 
 You can change the owner of a file by using the `chown` command. This must be done as a *superuser*.
 
-```bash
+```
 $ su
 Password:
 # chown new_user some_file
@@ -462,7 +462,7 @@ $ echo Done
 
 The group ownership of a file or directory may be changed with `chgrp`. You must be the owner of the file or directory to perform a `chgrp`.
 
-```bash
+```
 $ chgrp new_group some_file
 ```
 
@@ -484,7 +484,7 @@ There are several commands that can be used to control processes. They are:
 
 Most programs (including those with a GUI) can be launched from the command line. For example
 
-```bash
+```
 $ jupyter notebook
 ```
 
@@ -494,7 +494,7 @@ In some cases, the shell will wait for you to exit the launched program to finis
 
 To display a list of the processes we have launched, use either of two commands - `jobs` and `ps`. If you use `jobs` you will get back a *job number*, whereas with `ps`, you are given a *process id (PID)*.
 
-```bash
+```
 $ ps
 PID TTY TIME CMD
 1211 pts/4 00:00:00 bash
@@ -517,7 +517,7 @@ For example, a text editor might listen for any signal that indicates that the u
 
 For example,
 
-```bash
+```
 # To kill a process using its job id
 $ kill %1
 
@@ -531,7 +531,7 @@ Now let's suppose that you have a program that is stuck and you want to get rid 
 2. Issue a `kill` command for that PID.
 3. If the process refuses to terminate (i.e., it is ignoring the signal), send increasingly harsh signals until it does terminate.
 
-```bash
+```
 $ ps x | grep bad_program
 
 PID TTY STAT TIME COMMAND
@@ -571,7 +571,7 @@ The basic structure of a script is:
 
 Create a file called `hello_bash` with the following content
 
-```bash
+```
 #!/bin/bash
 # My first script
 
@@ -584,7 +584,7 @@ echo "Hello World!"
 
 #### Set Permissions
 
-```bash
+```
 $ chmod 755 hello_bash
 ```
 
@@ -596,7 +596,7 @@ When you run a command or script, the system searches through a list of pre-defi
 
 Inspect this list using:
 
-```bash
+```
 $ echo $PATH | tr ":" "\n" | nl
 ```
 
@@ -604,7 +604,7 @@ You can add directories to your `PATH` by concatenating them to the existing PAT
 
 The proper way to do this is to store all user scripts in a single directory (called `bin` , a subdirectory of `$HOME`) and add it to PATH in your `.bash_profile` or `.bashrc`
 
-```bash
+```
 $ export PATH=$PATH:$HOME/bin
 ```
 
@@ -641,7 +641,7 @@ The **`~/.bashrc`** file is probably **the most important startup file** from th
 
 A typical `.bash_profile` script looks like
 
-```bash
+```
 # .bash_profile
 
 # Get aliases and functions
@@ -660,7 +660,7 @@ The `export` command tells the shell to make the contents of PATH available to c
 
 An alias is an easy way to create a new command which acts as an abbreviation for a longer one. It has the following syntax:
 
-```bash
+```
 alias name=value
 
 # example
@@ -679,7 +679,7 @@ Aliases are good for very simple commands, but if you want to create something m
 
 The syntax for defining a function is
 
-```bash
+```
 fn_name() {
 	commands
 }
@@ -699,7 +699,7 @@ Essentially, *Here* scripts are files created inside scripts using a form of I/O
 
 Syntax
 
-```bash
+```
 command << token
 <content>
 token
@@ -709,7 +709,7 @@ where a `token` can be any string, used to mark the beginning and end of the con
 
 Let's write a shell script to produce a HTML web page.
 
-```bash
+```
 #!/bin/bash
 # A script to produce an HTML file
 
@@ -740,7 +740,7 @@ Like other languages, bash uses variables to store values. Variables are given l
 
 When you need the **name** of a variable, you write **only the name**, for example
 
-```bash
+```
 # to set variables
 picture=/usr/share/images/foo.png
 
@@ -759,13 +759,13 @@ Putting spaces on either or both sides of the equal-sign (`=`) when assigning a 
 
 When you need the **content** of a variable (called *expanding*), you prefix its name with **a dollar-sign**, like
 
-```bash
+```
 echo "The used picture is: $picture"
 ```
 
 Note that within Arithmetic expressions, the dollar sign is not needed
 
-```bash
+```
 a=5
 ((b=a+5))
 echo $b
@@ -777,13 +777,13 @@ echo $b
 
 ##### Using default values
 
-```bash
+```
 ${PARAMETER:-WORD}
 ```
 
 If `PARAMETER` is unset (never was defined) or null (empty), this one expands to `WORD`, otherwise it expands to the value of `PARAMETER`, as if it just was `${PARAMETER}`.
 
-```bash
+```
 ${PARAMETER-WORD}
 ```
 
@@ -791,13 +791,13 @@ If you omit the `:` (colon), , the default value is only used when the parameter
 
 ##### Setting default values
 
-```bash
+```
 ${PARAMETER:=WORD}
 ```
 
 The default text *WORD* is expanded and **assigned** to the parameter, if it was unset or null.
 
-```bash
+```
 ${PARAMETER=WORD}
 ```
 
@@ -807,7 +807,7 @@ This works only if `PARAMETER` was unset.
 
 If reading input from user, or picking up passed parameters, use
 
-```bash
+```
 #!/bin/bash
 echo "Press Y to continue, N to exit"
 echo "You have 5 seconds to choose"
@@ -830,7 +830,7 @@ Environment variables are treated more like *constants* as they rarely change, a
 
 Let's modify our here-script to use variables
 
-```bash
+```
 #!/bin/bash
 # A script to produce an HTML file
 
@@ -857,12 +857,12 @@ In Bash, the scope of user variables is generally *global*. That means, it does 
 
 Compare the following *equivalent* code snippets:
 
-```bash
+```
 myvariable=test
 echo $myvariable
 ```
 
-```bash
+```
 myfunction() {
   myvariable=test
 }
@@ -880,7 +880,7 @@ In both cases, the variable `myvariable` is set and accessible from everywhere i
 
 Variables defined using the *local* keyword (or the `declare` command) tags a variable to be treated completely local and separate inside the function where it was declared.
 
-```bash
+```
 foo=external
 
 printvalue() {
@@ -898,7 +898,7 @@ Every UNIX process runs in a so-called *environment*, within which are contained
 
 To create environment variables, use
 
-```bash
+```
 export NEW_ENV_VAR=value
 ```
 
@@ -908,7 +908,7 @@ export NEW_ENV_VAR=value
 
 Let's use *command substitution* to pass the output of a command to the content of a script. Recall that this can be done using `$(command)` This is preferred over using back-ticks.
 
-```bash
+```
 #!/bin/bash
 # A script to produce an HTML file
 
@@ -936,7 +936,7 @@ With *shell functions* we can create commands to do what existing commands canno
 
 Functions syntax
 
-```bash
+```
 function_name()
 {
 	echo "This is a function."
@@ -945,7 +945,7 @@ function_name()
 
 Let's return to our HTML producing shell script and write functions to produce additional system info
 
-```bash
+```
 #!/bin/bash
 # A script to produce an HTML file
 
@@ -1009,7 +1009,7 @@ To add intelligence to our script, we make use of commands such as `if, test, ex
 
 It makes a decision based on the *exit status* of a command. Syntax:
 
-```bash
+```
 if commands; then
 commands
 [elif commands; then
@@ -1025,7 +1025,7 @@ Note that indentation is not required, but is considered good practice to improv
 
 It is unusual in that it has two different syntactic forms:
 
-```bash
+```
 # Testing if a command returns true (exit status 0)
 test <expression>
 # or
@@ -1054,7 +1054,7 @@ Here is a partial list of the conditions that `test` can evaluate.
 
 The syntax can be written out in a few different forms
 
-```bash
+```
 # preferred form
 if [ -f .bash_profile ]; then
     echo "You have a .bash_profile. Things are fine."
@@ -1087,7 +1087,7 @@ For scripts that can only be run by a superuser, we can use the `id` command to 
 
 For a superuser, the `id -u` command returns a `0`.
 
-```bash
+```
 if [ "$(id -u)" = "0" ]; then
 		echo "Welcome, superuser."
 else
@@ -1107,7 +1107,7 @@ a `case` supports several possible outcomes based on the evaluation of a value.
 
 **Syntax**
 
-```bash
+```
 case word in
     patterns ) commands ;;
 esac
@@ -1119,15 +1119,14 @@ esac
 
 **Example**
 
-```bash
+```
 #!/bin/bash
-
 echo -n "Please enter a character: "
 read char
 case $char in
 	                    [0-9] ) echo "You entered a number.";;
 	[[:lower:]] | [[:upper:]] ) echo "You entered an alphabet.";;
-	                        * ) echo "Entered character is not alphanumeric."
+	                        * ) echo "Entered character is not alphanumeric.";;
 esac	                        
 ```
 
@@ -1144,7 +1143,7 @@ Looping is repeatedly executing a section of your program based on the exit stat
 
 Syntax
 
-```bash
+```
 while [ condition ]; do
 	actions
 done
@@ -1152,7 +1151,7 @@ done
 
 Example
 
-```bash
+```
 #!/bin/bash
 number=0
 while [ "$number" -lt 10 ]; do
@@ -1168,7 +1167,7 @@ done
 
 Example
 
-```bash
+```
 #!/bin/bash
 
 selection=
@@ -1177,7 +1176,6 @@ until [ "$selection" = "0" ]; do
     PROGRAM MENU
     1 - Display free disk space
     2 - Display free memory
-
     0 - exit program
 "
     echo -n "Enter selection: "
@@ -1187,7 +1185,7 @@ until [ "$selection" = "0" ]; do
         1 ) df ;;
         2 ) free ;;
         0 ) exit ;;
-        * ) echo "Please enter 1, 2, or 0"
+        * ) echo "Please enter 1, 2, or 0" ;;
     esac
 done
 ```
@@ -1203,7 +1201,7 @@ Here's how it works:
 
 Syntax
 
-```bash
+```
 for variable in list; do
 	commands
 done
@@ -1216,8 +1214,8 @@ All kinds of expansions can be used.
 
 When bash encounters a syntax error, it halts program execution with an error message, such as
 
-```bash
-./myscript.sh: [: =: unary operator expected
+```
+./myscript.sh: [: =: unary operator expected]
 ```
 
 Here, the shell is trying to tell us is that there is only one item around the '=' (a binary operator).
@@ -1242,7 +1240,7 @@ Writing `some_variable=` is perfectly OK syntax, used to set a variable's value 
 
 Consider,
 
-```bash
+```
 number=
 if [ $number = "1"]; then
 	echo "Number equals 1"
@@ -1250,7 +1248,7 @@ if [ $number = "1"]; then
 
 What the shell will essentially see is
 
-```bash
+```
 if [  = "1" ]; then
 ```
 
@@ -1258,13 +1256,13 @@ and produce an error, because `=` being a binary operator expects two arguments 
 
 To fix this, whenever we have a variable that could be empty, use
 
-```bash
+```
 if [ "$number" = "1" ]; then
 ```
 
 which will expand to
 
-```bash
+```
 if [ "" = "1" ]; then
 ```
 
@@ -1272,7 +1270,7 @@ and the condition will be evaluated without error.
 
 Two more options to deal with potentially empty variables:
 
-```bash
+```
 # use double square brackets
 if [[ $(grep text file) = '' ]]; then
 ...
@@ -1288,7 +1286,7 @@ if [[ x$(grep text file) = 'x' ]]; then
 
 If you forget to supply closing quotation marks, the script will fail with an error such as
 
-```bash
+```
 ./myscript: line 8: unexpected EOF while looking for matching "
 ./myscript: line 10 syntax error: unexpected end of file
 ```
@@ -1299,7 +1297,7 @@ This happens because the shell keeps looking for the closing quotes to mark the 
 
 To see what bash is doing when it starts to run your script, use the `-x` switch in the shebang
 
-```bash
+```
 #!/bin/bash -x
 # or
 set -x
@@ -1312,7 +1310,7 @@ Use `set -x` to turn tracing on and `set +x` to turn tracing off.
 
 For example
 
-```bash
+```
 #!/bin/bash
 number=1
 set -x
@@ -1326,7 +1324,7 @@ set +x
 
 To make bash exit a script if any command fails (returns nonzero exit code)
 
-```bash
+```
 #!/bin/bash -e
 # or
 set -e
@@ -1349,7 +1347,7 @@ Scripts can be made interactive by requesting and acting on user's responses.
 
 Example
 
-```bash
+```
 #!/bin/bash
 echo -n "What is your name > "
 read name
@@ -1362,7 +1360,7 @@ Note that "`-n`" given to the `echo` command causes it to keep the cursor on the
 
 Use it inside an `if` block,
 
-```bash
+```
 #!/bin/bash
 echo -n "Press Y to continue. "
 if read -t 5 choice; then
@@ -1374,7 +1372,7 @@ fi
 
 Or use it to assign a default value
 
-```bash
+```
 #!/bin/bash
 TMOUT=5
 echo What is your name?
@@ -1394,14 +1392,14 @@ This example makes use of the `TMOUT` shell variable, and assigns a default valu
   The leading "`$`" is not needed to reference variables inside the arithmetic expression.
   Whitespaces are ignored.
 
-```bash
+```
 $ echo $((2+3))
 $ echo $((a * b))
 ```
 
 - We can perform BEDMAS operations
 
-```bash
+```
 #!/bin/bash
 num_1=0
 num_2=0
@@ -1428,7 +1426,7 @@ echo "Modulo = $((num_1 % num_2))"
   that contain the contents of the command.
 - For example, if we ran `my_script` with the following arguments,
 
-```bash
+```
 ./my_script arg1 arg2 arg3
 ```
 
@@ -1445,7 +1443,7 @@ Inside `my_script` we could access the following data:
 
 If an expected parameter is not supplied, it is possible to assign a default value using the syntax below. Now, if `$1` is empty, the variable FIRST_ARG will take the value "no_first_arg" .
 
-```bash
+```
 #!/bin/bash
 FIRST_ARG="${1:-no_first_arg}"
 echo ${FIRST_ARG}
@@ -1460,7 +1458,7 @@ echo ${FIRST_ARG}
 
 Example
 
-```bash
+```
 #!/bin/bash
 echo "You supplied $# positional arguments"
 while [ "$1" != "" ]; do
@@ -1475,7 +1473,7 @@ The shell variable "$@" contains the list of command line arguments. This techni
 
 Example
 
-```bash
+```
 #!/bin/bash
 
 for filename in "$@"; do
@@ -1520,7 +1518,7 @@ Every well-written program returns an exit status when it finishes. If a program
 
 The environment variable **`$?`** contains the exit status of the last command executed.
 
-```bash
+```
 $ true; echo $?
 0
 $ false; echo $?
@@ -1538,7 +1536,7 @@ The `true` and `false` commands are programs that do nothing except return an ex
 
 An example
 
-```bash
+```
 #!/bin/bash
 cd $1
 if [ "$?" = "0" ]; then
@@ -1555,7 +1553,7 @@ This script will `cd` to a given directory, and empty it. If the `cd` command fa
 
 Since we will be checking for errors often in our programs, it makes sense to write a function that will display error messages and return an error exit status.
 
-```bash
+```
 error_exit()
 {
 	echo ${LINENO}: "$1" 1>&2
@@ -1573,7 +1571,7 @@ fi
 
 The control operators `&&` and `||` denote AND lists and OR lists, respectively and help  you execute a command based on whether or not the previous command completed successfully.
 
-```bash
+```
 command1 && command2
 # run command2 iff command1 is successful (exit status 0)
 
@@ -1585,7 +1583,7 @@ The exit status of AND and OR lists is the exit status of the last command execu
 
 Examples
 
-```bash
+```
 $ true && echo "echo will run"
 $ false && echo "echo will not run"
 $ true || echo "echo will not run"
@@ -1600,7 +1598,7 @@ The `trap` command allows you to execute a command when a signal is received by 
 
 Syntax
 
-```bash
+```
 trap arg signals
 ```
 
@@ -1611,13 +1609,13 @@ where
 
 Example
 
-```bash
+```
 trap "rm $TEMP_FILE; exit" SIGHUP SIGINT SIGTERM
 ```
 
 It is a good practice to create a function that is called when you want to perform any actions at the end of your script in response to a signal.
 
-```bash
+```
 # housekeeping
 clean_up() {
 	rm $TEMP_FILE
@@ -1646,7 +1644,7 @@ the `<()` is used to get the output of a command and treat it as a *file,* for u
 
 Example
 
-```bash
+```
 # Consider
 $ grep somestring file1 > /tmp/a
 $ grep somestring file2 > /tmp/b
