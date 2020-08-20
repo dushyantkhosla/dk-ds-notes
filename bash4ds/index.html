@@ -527,8 +527,8 @@
 <h2 id="01-2-links">01-2 Links<a class="headerlink" href="#01-2-links" title="Permanent link">&para;</a></h2>
 <p>When inspecting directories with <code>ls -l</code> we sometimes see the filenames followed by a <code>-&gt;</code> notation.
 For example:</p>
-<div class="highlight"><pre><span></span><code>lrwxrwxrwx     <span class="m">25</span> Jul  <span class="m">3</span> <span class="m">16</span>:42 System.map -&gt; /boot/System.map-2.0.36-3
--rw-r--r-- <span class="m">105911</span> Oct <span class="m">13</span>  <span class="m">1998</span> System.map-2.0.36-0.7
+<div class="highlight"><pre><span></span><code>lrwxrwxrwx     25 Jul  3 16:42 System.map -&gt; /boot/System.map-2.0.36-3
+-rw-r--r-- 105911 Oct 13  1998 System.map-2.0.36-0.7
 </code></pre></div>
 
 <p>These are called <em>symbolic links</em>, created using the <code>ln</code> command.</p>
@@ -543,7 +543,7 @@ For example:</p>
 <li><strong>An alias.</strong> Commands that you can define yourselves, built from other commands.</li>
 </ol>
 <p>Most commands have the syntax</p>
-<div class="highlight"><pre><span></span><code><span class="nb">command</span> -options arguments
+<div class="highlight"><pre><span></span><code>command -options arguments
 </code></pre></div>
 
 <p>where</p>
@@ -711,58 +711,58 @@ For example:</p>
 <h1 id="03-expansion">03 - Expansion<a class="headerlink" href="#03-expansion" title="Permanent link">&para;</a></h1>
 <p>Each time you type a command and hit return, bash <em>expands</em> the text to unpack wildcards etc. before execution. For example</p>
 <h3 id="03-1-wildcards">03-1 Wildcards<a class="headerlink" href="#03-1-wildcards" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> *
+<div class="highlight"><pre><span></span><code>$ echo *
 </code></pre></div>
 
 <p>will not return "*" as you might think. The wildcard * will be expanded into filenames in the current directory before <code>echo</code> acts on it.</p>
 <p>The mechanism by which wildcards work is called <em>pathname expansion</em>.
 Try out the following</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span> D*
-<span class="nb">echo</span> *s
-<span class="nb">echo</span> <span class="o">[[</span>:upper:<span class="o">]]</span>*
-<span class="nb">echo</span> /usr/*/share
-<span class="nb">echo</span> ~
-<span class="nb">echo</span> ~foo
+<div class="highlight"><pre><span></span><code>echo D*
+echo *s
+echo [[:upper:]]*
+echo /usr/*/share
+echo ~
+echo ~foo
 </code></pre></div>
 
 <p>Similar to "*", the "~" wildcard is expanded into the pathname for your Home directory.</p>
 <h3 id="03-2-arithmetic-expansion">03-2 Arithmetic Expansion<a class="headerlink" href="#03-2-arithmetic-expansion" title="Permanent link">&para;</a></h3>
 <p>The shell allows arithmetic to be performed by expansion. This allow us to use the shell prompt as a calculator. Arithmetic expansion uses the form <code>$((expression))</code> where <em>expression</em> is an arithmetic expression consisting of integer values and arithmetic operators.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="k">$((</span><span class="o">(</span><span class="m">5</span><span class="o">**</span><span class="m">2</span><span class="o">)*</span><span class="m">3</span><span class="k">))</span>
-<span class="nb">echo</span> Five by two is <span class="k">$((</span><span class="m">5</span><span class="o">/</span><span class="m">2</span><span class="k">))</span> leaving a remainder of <span class="k">$((</span><span class="m">5</span><span class="o">%</span><span class="m">2</span><span class="k">))</span>
+<div class="highlight"><pre><span></span><code>echo $(((5**2)*3))
+echo Five by two is $((5/2)) leaving a remainder of $((5%2))
 </code></pre></div>
 
 <h3 id="03-3-brace-expansion">03-3 Brace Expansion<a class="headerlink" href="#03-3-brace-expansion" title="Permanent link">&para;</a></h3>
 <p>With it, you can create multiple text strings from a pattern containing braces. The brace expression itself may contain either a comma-separated list of strings, or a range of integers or single characters. The pattern may not contain embedded whitespace.</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> Front-<span class="o">{</span>A,B,C<span class="o">}</span>-Back
-<span class="c1"># Front-A-Back Front-B-Back Front-C-Back</span>
+<div class="highlight"><pre><span></span><code>$ echo Front-{A,B,C}-Back
+# Front-A-Back Front-B-Back Front-C-Back
 
-$ <span class="nb">echo</span> Number_<span class="o">{</span><span class="m">1</span>..5<span class="o">}</span>
-<span class="c1"># Number_1 Number_2 Number_3 Number_4 Number_5</span>
+$ echo Number_{1..5}
+# Number_1 Number_2 Number_3 Number_4 Number_5
 
-$ <span class="nb">echo</span> <span class="o">{</span>Z..A<span class="o">}</span>
-<span class="c1"># Z Y X W V U T S R Q P O N M L K J I H G F E D C B A</span>
+$ echo {Z..A}
+# Z Y X W V U T S R Q P O N M L K J I H G F E D C B A
 
-$ <span class="nb">echo</span> a<span class="o">{</span>A<span class="o">{</span><span class="m">1</span>,2<span class="o">}</span>,B<span class="o">{</span><span class="m">3</span>,4<span class="o">}}</span>b
-<span class="c1"># aA1b aA2b aB3b aB4b</span>
+$ echo a{A{1,2},B{3,4}}b
+# aA1b aA2b aB3b aB4b
 </code></pre></div>
 
 <p>The most common application is to make lists of files or directories to be created. For example, to create directories to hold data by month;</p>
-<div class="highlight"><pre><span></span><code>$ mkdir <span class="o">{</span><span class="m">2007</span>..2009<span class="o">}</span>-0<span class="o">{</span><span class="m">1</span>..9<span class="o">}</span> <span class="o">{</span><span class="m">2007</span>..2009<span class="o">}</span>-<span class="o">{</span><span class="m">10</span>..12<span class="o">}</span>
+<div class="highlight"><pre><span></span><code>$ mkdir {2007..2009}-0{1..9} {2007..2009}-{10..12}
 $ ls
 
-<span class="m">2007</span>-01 <span class="m">2007</span>-07 <span class="m">2008</span>-01 <span class="m">2008</span>-07 <span class="m">2009</span>-01 <span class="m">2009</span>-07
-<span class="m">2007</span>-02 <span class="m">2007</span>-08 <span class="m">2008</span>-02 <span class="m">2008</span>-08 <span class="m">2009</span>-02 <span class="m">2009</span>-08
-<span class="m">2007</span>-03 <span class="m">2007</span>-09 <span class="m">2008</span>-03 <span class="m">2008</span>-09 <span class="m">2009</span>-03 <span class="m">2009</span>-09
-<span class="m">2007</span>-04 <span class="m">2007</span>-10 <span class="m">2008</span>-04 <span class="m">2008</span>-10 <span class="m">2009</span>-04 <span class="m">2009</span>-10
-<span class="m">2007</span>-05 <span class="m">2007</span>-11 <span class="m">2008</span>-05 <span class="m">2008</span>-11 <span class="m">2009</span>-05 <span class="m">2009</span>-11
-<span class="m">2007</span>-06 <span class="m">2007</span>-12 <span class="m">2008</span>-06 <span class="m">2008</span>-12 <span class="m">2009</span>-06 <span class="m">2009</span>-12
+2007-01 2007-07 2008-01 2008-07 2009-01 2009-07
+2007-02 2007-08 2008-02 2008-08 2009-02 2009-08
+2007-03 2007-09 2008-03 2008-09 2009-03 2009-09
+2007-04 2007-10 2008-04 2008-10 2009-04 2009-10
+2007-05 2007-11 2008-05 2008-11 2009-05 2009-11
+2007-06 2007-12 2008-06 2008-12 2009-06 2009-12
 </code></pre></div>
 
 <h3 id="03-4-parameter-expansion">03-4 Parameter Expansion<a class="headerlink" href="#03-4-parameter-expansion" title="Permanent link">&para;</a></h3>
 <p>The Linux system is able to store data inside <em>variables</em> that can be referenced on the CLI or inside scripts. You can inspect the list of <em>global variables</em> by running <code>printenv</code> or just <code>env</code>. To access the value inside a parameter/variable, we use the "$" notation.</p>
 <div class="highlight"><pre><span></span><code>$ printenv
-$ <span class="nb">echo</span> <span class="nv">$USER</span> <span class="nv">$HOME</span>
+$ echo $USER $HOME
 </code></pre></div>
 
 <ul>
@@ -772,9 +772,9 @@ $ <span class="nb">echo</span> <span class="nv">$USER</span> <span class="nv">$H
 </ul>
 <h3 id="03-5-command-expansion">03-5 Command Expansion<a class="headerlink" href="#03-5-command-expansion" title="Permanent link">&para;</a></h3>
 <p>Using the syntax <code>$(command)</code> we can use the output of a command as an expansion.</p>
-<div class="highlight"><pre><span></span><code>$ ls -l <span class="k">$(</span>which python<span class="k">)</span>
-<span class="c1"># alternatively</span>
-$ ls -l <span class="sb">`</span>which python<span class="sb">`</span>
+<div class="highlight"><pre><span></span><code>$ ls -l $(which python)
+# alternatively
+$ ls -l `which python`
 </code></pre></div>
 
 <h3 id="03-6-quoting">03-6 Quoting<a class="headerlink" href="#03-6-quoting" title="Permanent link">&para;</a></h3>
@@ -783,38 +783,38 @@ $ ls -l <span class="sb">`</span>which python<span class="sb">`</span>
 <li>If you place text inside double quotes, all the special characters used by the shell lose their special meaning and are treated as ordinary characters.</li>
 <li>Exceptions are dollar, backslash and back-quote. Hence, parameter expansion, arithmetic expansion, and command substitution still take place within double quotes.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ mv <span class="s2">&quot;file with spaces in its name.txt&quot;</span> file_with_spaces_in_its_name.txt
-$ <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2"> </span><span class="k">$((</span><span class="m">2</span><span class="o">+</span><span class="m">2</span><span class="k">))</span><span class="s2"> </span><span class="k">$(</span>cal<span class="k">)</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code>$ mv &quot;file with spaces in its name.txt&quot; file_with_spaces_in_its_name.txt
+$ echo &quot;$USER $((2+2)) $(cal)&quot;
 
-<span class="c1"># Note the difference between</span>
+# Note the difference between
 
-$ <span class="nb">echo</span> <span class="k">$(</span>cal<span class="k">)</span>
-<span class="c1"># the unquoted command substitution will result in a command line containing thirty-eight arguments.</span>
+$ echo $(cal)
+# the unquoted command substitution will result in a command line containing thirty-eight arguments.
 
-$ <span class="nb">echo</span> <span class="s2">&quot;</span><span class="k">$(</span>cal<span class="k">)</span><span class="s2">&quot;</span>
-<span class="c1"># a command line with one argument that includes the embedded spaces and newlines.</span>
+$ echo &quot;$(cal)&quot;
+# a command line with one argument that includes the embedded spaces and newlines.
 </code></pre></div>
 
 <h4 id="single-quotes">Single Quotes<a class="headerlink" href="#single-quotes" title="Permanent link">&para;</a></h4>
 <p>These are useful when you wish to suppress all expansions.</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> text ~/*.txt <span class="o">{</span>a,b<span class="o">}</span> <span class="k">$(</span><span class="nb">echo</span> foo<span class="k">)</span> <span class="k">$((</span><span class="m">2</span><span class="o">+</span><span class="m">2</span><span class="k">))</span> <span class="nv">$USER</span>
-text /home/me/ls-output.txt a b foo <span class="m">4</span> me
-$ <span class="nb">echo</span> <span class="s2">&quot;text ~/*.txt {a,b} </span><span class="k">$(</span><span class="nb">echo</span> foo<span class="k">)</span><span class="s2"> </span><span class="k">$((</span><span class="m">2</span><span class="o">+</span><span class="m">2</span><span class="k">))</span><span class="s2"> </span><span class="nv">$USER</span><span class="s2">&quot;</span>
-text ~/*.txt <span class="o">{</span>a,b<span class="o">}</span> foo <span class="m">4</span> me
-$ <span class="nb">echo</span> <span class="s1">&#39;text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER&#39;</span>
-text ~/*.txt <span class="o">{</span>a,b<span class="o">}</span> <span class="k">$(</span><span class="nb">echo</span> foo<span class="k">)</span> <span class="k">$((</span><span class="m">2</span><span class="o">+</span><span class="m">2</span><span class="k">))</span> <span class="nv">$USER</span>
+<div class="highlight"><pre><span></span><code>$ echo text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER
+text /home/me/ls-output.txt a b foo 4 me
+$ echo &quot;text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER&quot;
+text ~/*.txt {a,b} foo 4 me
+$ echo &#39;text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER&#39;
+text ~/*.txt {a,b} $(echo foo) $((2+2)) $USER
 </code></pre></div>
 
 <h4 id="escaping-characters">Escaping Characters<a class="headerlink" href="#escaping-characters" title="Permanent link">&para;</a></h4>
 <p>To quote a single character, precede it character with a backslash. Often this is done inside double quotes to selectively prevent an expansion. It is also common to use escaping to eliminate the special meaning of a character in a filename (special characters are allowed in filenames, but using anything other than underscores is considered bad practice.) To allow a backslash character to appear, use the double-backslash.</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="s2">&quot;The balance for user </span><span class="nv">$USER</span><span class="s2"> is: \$5.00&quot;</span>
-<span class="c1"># The balance for user dkhosla is: $5.00</span>
+<div class="highlight"><pre><span></span><code>$ echo &quot;The balance for user $USER is: \$5.00&quot;
+# The balance for user dkhosla is: $5.00
 </code></pre></div>
 
 <p>Handy backslash trick: Use a backslash at the end of a line to get the shell to ignore a newline character.</p>
-<div class="highlight"><pre><span></span><code>$ ls -l <span class="se">\</span>
-   --reverse <span class="se">\</span>
-   --human-readable <span class="se">\</span>
+<div class="highlight"><pre><span></span><code>$ ls -l \
+   --reverse \
+   --human-readable \
    --full-time
 </code></pre></div>
 
@@ -826,19 +826,19 @@ text ~/*.txt <span class="o">{</span>a,b<span class="o">}</span> <span class="k"
 <li><code>\a</code> for alerts (makes terminal beep),</li>
 <li><code>\\</code> to insert a backslash.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> -e <span class="s2">&quot;Inserting several blank lines\n\n\n&quot;</span>
+<div class="highlight"><pre><span></span><code>$ echo -e &quot;Inserting several blank lines\n\n\n&quot;
 Inserting several blank lines
 
 
 
-$ <span class="nb">echo</span> -e <span class="s2">&quot;Words\tseparated\tby\thorizontal\ttabs.&quot;</span>
+$ echo -e &quot;Words\tseparated\tby\thorizontal\ttabs.&quot;
 Words separated   by  horizontal  tabs
 
-$ <span class="nb">echo</span> -e <span class="s2">&quot;\aMy computer went \&quot;beep\&quot;.&quot;</span>
-My computer went <span class="s2">&quot;beep&quot;</span>.
+$ echo -e &quot;\aMy computer went \&quot;beep\&quot;.&quot;
+My computer went &quot;beep&quot;.
 
-$ <span class="nb">echo</span> -e <span class="s2">&quot;DEL C:\\WIN2K\\LEGACY_OS.EXE&quot;</span>
-DEL C:<span class="se">\W</span>IN2K<span class="se">\L</span>EGACY_OS.EXE
+$ echo -e &quot;DEL C:\\WIN2K\\LEGACY_OS.EXE&quot;
+DEL C:\WIN2K\LEGACY_OS.EXE
 </code></pre></div>
 
 <h1 id="04-permissions">04 - Permissions<a class="headerlink" href="#04-permissions" title="Permanent link">&para;</a></h1>
@@ -856,7 +856,7 @@ DEL C:<span class="se">\W</span>IN2K<span class="se">\L</span>EGACY_OS.EXE
 <li>Rights can be assigned to <strong>read</strong> a file, to <strong>write</strong> a file, and to <strong>execute</strong> a file (i.e., run the file as a program).</li>
 </ul>
 <div class="highlight"><pre><span></span><code>$ ls -l /bin/bash
--rwxr-xr-x <span class="m">1</span> root root  <span class="m">316848</span> Feb <span class="m">27</span>  <span class="m">2000</span> /bin/bash
+-rwxr-xr-x 1 root root  316848 Feb 27  2000 /bin/bash
 </code></pre></div>
 
 <p>Here we can see:</p>
@@ -869,29 +869,29 @@ DEL C:<span class="se">\W</span>IN2K<span class="se">\L</span>EGACY_OS.EXE
 </ul>
 <p>To interpret the 10-character permissions string, we break it down into sets of 1, 3, 3 and 3</p>
 <div class="highlight"><pre><span></span><code>- rwx rwx rwx
-File type, - <span class="k">for</span> a regular file and <span class="s2">&quot;d&quot;</span> <span class="k">for</span> a directory
-    Read, write, execute permissions <span class="k">for</span> file owner
-            Read, write, execute permissions <span class="k">for</span> the group owner
-                    Read, write, execute permissions <span class="k">for</span> everyone <span class="k">else</span>
+File type, - for a regular file and &quot;d&quot; for a directory
+    Read, write, execute permissions for file owner
+            Read, write, execute permissions for the group owner
+                    Read, write, execute permissions for everyone else
 </code></pre></div>
 
 <h4 id="chmod">chmod<a class="headerlink" href="#chmod" title="Permanent link">&para;</a></h4>
 <p>The <code>chmod</code> command is used to change the permissions of a file or directory. To use it, you specify the desired permission settings and the file or files that you wish to modify.</p>
 <p>Using the Octal system,</p>
-<div class="highlight"><pre><span></span><code>rwx rwx <span class="nv">rwx</span> <span class="o">=</span> <span class="m">111</span> <span class="m">111</span> <span class="m">111</span>
-rw- rw- rw- <span class="o">=</span> <span class="m">110</span> <span class="m">110</span> <span class="m">110</span>
-rwx --- --- <span class="o">=</span> <span class="m">111</span> <span class="m">000</span> <span class="m">000</span>
+<div class="highlight"><pre><span></span><code>rwx rwx rwx = 111 111 111
+rw- rw- rw- = 110 110 110
+rwx --- --- = 111 000 000
 
 and so on...
 
-<span class="nv">rwx</span> <span class="o">=</span> <span class="m">111</span> in <span class="nv">binary</span> <span class="o">=</span> <span class="m">7</span>
-rw- <span class="o">=</span> <span class="m">110</span> in <span class="nv">binary</span> <span class="o">=</span> <span class="m">6</span>
-r-x <span class="o">=</span> <span class="m">101</span> in <span class="nv">binary</span> <span class="o">=</span> <span class="m">5</span>
-r-- <span class="o">=</span> <span class="m">100</span> in <span class="nv">binary</span> <span class="o">=</span> <span class="m">4</span>
+rwx = 111 in binary = 7
+rw- = 110 in binary = 6
+r-x = 101 in binary = 5
+r-- = 100 in binary = 4
 </code></pre></div>
 
 <p>For example, if we wanted to set <code>some_file</code> to have read and write permission for the owner, but wanted to keep the file private from others, we would:</p>
-<div class="highlight"><pre><span></span><code>$ chmod <span class="m">600</span> some_file
+<div class="highlight"><pre><span></span><code>$ chmod 600 some_file
 </code></pre></div>
 
 <p>Here are commonly user permissions:</p>
@@ -963,9 +963,9 @@ r-- <span class="o">=</span> <span class="m">100</span> in <span class="nv">bina
 <p>You can change the owner of a file by using the <code>chown</code> command. This must be done as a <em>superuser</em>.</p>
 <div class="highlight"><pre><span></span><code>$ su
 Password:
-<span class="c1"># chown new_user some_file</span>
-<span class="c1"># exit</span>
-$ <span class="nb">echo</span> Done
+# chown new_user some_file
+# exit
+$ echo Done
 </code></pre></div>
 
 <h4 id="chgrp">chgrp<a class="headerlink" href="#chgrp" title="Permanent link">&para;</a></h4>
@@ -994,9 +994,9 @@ $ <span class="nb">echo</span> Done
 <p>To display a list of the processes we have launched, use either of two commands - <code>jobs</code> and <code>ps</code>. If you use <code>jobs</code> you will get back a <em>job number</em>, whereas with <code>ps</code>, you are given a <em>process id (PID)</em>.</p>
 <div class="highlight"><pre><span></span><code>$ ps
 PID TTY TIME CMD
-<span class="m">1211</span> pts/4 <span class="m">00</span>:00:00 bash
-<span class="m">1246</span> pts/4 <span class="m">00</span>:00:00 xload
-<span class="m">1247</span> pts/4 <span class="m">00</span>:00:00 ps
+1211 pts/4 00:00:00 bash
+1246 pts/4 00:00:00 xload
+1247 pts/4 00:00:00 ps
 </code></pre></div>
 
 <h4 id="killing">Killing<a class="headerlink" href="#killing" title="Permanent link">&para;</a></h4>
@@ -1034,11 +1034,11 @@ PID TTY TIME CMD
 </tbody>
 </table>
 <p>For example,</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># To kill a process using its job id</span>
-$ <span class="nb">kill</span> %1
+<div class="highlight"><pre><span></span><code># To kill a process using its job id
+$ kill %1
 
-<span class="c1"># To kill a process using its process id</span>
-$ <span class="nb">kill</span> <span class="m">1246</span>
+# To kill a process using its process id
+$ kill 1246
 </code></pre></div>
 
 <p>Now let's suppose that you have a program that is stuck and you want to get rid of it. Here's what you do:</p>
@@ -1047,13 +1047,13 @@ $ <span class="nb">kill</span> <span class="m">1246</span>
 <li>Issue a <code>kill</code> command for that PID.</li>
 <li>If the process refuses to terminate (i.e., it is ignoring the signal), send increasingly harsh signals until it does terminate.</li>
 </ol>
-<div class="highlight"><pre><span></span><code>$ ps x <span class="p">|</span> grep bad_program
+<div class="highlight"><pre><span></span><code>$ ps x | grep bad_program
 
 PID TTY STAT TIME COMMAND
-<span class="m">2931</span> pts/5 SN <span class="m">0</span>:00 bad_program
+2931 pts/5 SN 0:00 bad_program
 
-$ <span class="nb">kill</span> -SIGTERM <span class="m">2931</span>
-$ <span class="nb">kill</span> -SIGKILL <span class="m">2931</span>
+$ kill -SIGTERM 2931
+$ kill -SIGKILL 2931
 </code></pre></div>
 
 <hr />
@@ -1078,10 +1078,10 @@ $ <span class="nb">kill</span> -SIGKILL <span class="m">2931</span>
 <h2 id="07-1-hello-bash">07-1 Hello Bash<a class="headerlink" href="#07-1-hello-bash" title="Permanent link">&para;</a></h2>
 <h4 id="create-the-script">Create the script<a class="headerlink" href="#create-the-script" title="Permanent link">&para;</a></h4>
 <p>Create a file called <code>hello_bash</code> with the following content</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># My first script</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+# My first script
 
-<span class="nb">echo</span> <span class="s2">&quot;Hello World!&quot;</span>
+echo &quot;Hello World!&quot;
 </code></pre></div>
 
 <ul>
@@ -1090,7 +1090,7 @@ $ <span class="nb">kill</span> -SIGKILL <span class="m">2931</span>
 <li>The third line is the <code>echo</code> <em>command</em> which simply prints a message to the screen.</li>
 </ul>
 <h4 id="set-permissions">Set Permissions<a class="headerlink" href="#set-permissions" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>$ chmod <span class="m">755</span> hello_bash
+<div class="highlight"><pre><span></span><code>$ chmod 755 hello_bash
 </code></pre></div>
 
 <ul>
@@ -1099,12 +1099,12 @@ $ <span class="nb">kill</span> -SIGKILL <span class="m">2931</span>
 <h4 id="add-scripts-directory-to-path">Add scripts directory to PATH<a class="headerlink" href="#add-scripts-directory-to-path" title="Permanent link">&para;</a></h4>
 <p>When you run a command or script, the system searches through a list of pre-defined directories for the command or script (known as the <strong><code>PATH</code></strong>).</p>
 <p>Inspect this list using:</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="nv">$PATH</span> <span class="p">|</span> tr <span class="s2">&quot;:&quot;</span> <span class="s2">&quot;\n&quot;</span> <span class="p">|</span> nl
+<div class="highlight"><pre><span></span><code>$ echo $PATH | tr &quot;:&quot; &quot;\n&quot; | nl
 </code></pre></div>
 
 <p>You can add directories to your <code>PATH</code> by concatenating them to the existing PATH, telling bash to search for commands/scripts in a predefined directory.</p>
 <p>The proper way to do this is to store all user scripts in a single directory (called <code>bin</code> , a subdirectory of <code>$HOME</code>) and add it to PATH in your <code>.bash_profile</code> or <code>.bashrc</code></p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/bin
+<div class="highlight"><pre><span></span><code>$ export PATH=$PATH:$HOME/bin
 </code></pre></div>
 
 <p>Now you should be able to run your scripts stored under <code>$HOME/bin</code> by simply typing its name on the prompt.</p>
@@ -1166,25 +1166,25 @@ $ <span class="nb">kill</span> -SIGKILL <span class="m">2931</span>
 </table>
 <p>The <strong><code>~/.bashrc</code></strong> file is probably <strong>the most important startup file</strong> from the ordinary user’s point of view, since it is almost always read. Non-login shells read it by default and most startup files for login shells are written in such a way as to read the <code>~/.bashrc</code> file as well.</p>
 <p>A typical <code>.bash_profile</code> script looks like</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># .bash_profile</span>
+<div class="highlight"><pre><span></span><code># .bash_profile
 
-<span class="c1"># Get aliases and functions</span>
-<span class="k">if</span> <span class="o">[</span> -f ~/.bashrc <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+# Get aliases and functions
+if [ -f ~/.bashrc ]; then
         . ~/.bashrc
-<span class="k">fi</span>
+fi
 
-<span class="c1"># Get user&#39;s environment and startup programs</span>
-<span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$HOME</span>/bin
-<span class="nb">export</span> PATH
+# Get user&#39;s environment and startup programs
+PATH=$PATH:$HOME/bin
+export PATH
 </code></pre></div>
 
 <p>The <code>export</code> command tells the shell to make the contents of PATH available to child processes of this shell.</p>
 <h2 id="07-3-aliases">07-3 Aliases<a class="headerlink" href="#07-3-aliases" title="Permanent link">&para;</a></h2>
 <p>An alias is an easy way to create a new command which acts as an abbreviation for a longer one. It has the following syntax:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">alias</span> <span class="nv">name</span><span class="o">=</span>value
+<div class="highlight"><pre><span></span><code>alias name=value
 
-<span class="c1"># example</span>
-<span class="nb">alias</span> <span class="nv">today</span><span class="o">=</span><span class="s1">&#39;date +&quot;%A, %B %-d, %Y&quot;&#39;</span>
+# example
+alias today=&#39;date +&quot;%A, %B %-d, %Y&quot;&#39;
 </code></pre></div>
 
 <p>where <em>name</em> is the name of the new command and <em>value</em> is the text to be executed whenever <em>name</em> is entered on the command line.</p>
@@ -1193,44 +1193,44 @@ $ <span class="nb">kill</span> -SIGKILL <span class="m">2931</span>
 <h2 id="07-4-functions">07-4 Functions<a class="headerlink" href="#07-4-functions" title="Permanent link">&para;</a></h2>
 <p>Aliases are good for very simple commands, but if you want to create something more complex, you should try <em>shell functions</em> . Shell functions can be thought of as tiny programs that take arguments and produce outputs.</p>
 <p>The syntax for defining a function is</p>
-<div class="highlight"><pre><span></span><code>fn_name<span class="o">()</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><code>fn_name() {
     commands
-<span class="o">}</span>
+}
 
-<span class="c1"># example</span>
-today<span class="o">()</span> <span class="o">{</span>
-    <span class="nb">echo</span> -n <span class="s2">&quot;Today&#39;s date is: &quot;</span>
-    date +<span class="s2">&quot;%A, %B %-d, %Y&quot;</span>
-<span class="o">}</span>
+# example
+today() {
+    echo -n &quot;Today&#39;s date is: &quot;
+    date +&quot;%A, %B %-d, %Y&quot;
+}
 </code></pre></div>
 
 <p>As with <em>aliases</em>, it is good practice to add functions to the startup files like <code>bashrc</code> or <code>zshrc</code>, or else the defined function will perish when the session ends.</p>
 <h2 id="07-5-here-scripts">07-5 Here Scripts<a class="headerlink" href="#07-5-here-scripts" title="Permanent link">&para;</a></h2>
 <p>Essentially, <em>Here</em> scripts are files created inside scripts using a form of I/O redirection that allows us to pass content to the STDIN of a command which takes files as input.</p>
 <p>Syntax</p>
-<div class="highlight"><pre><span></span><code><span class="nb">command</span> <span class="s">&lt;&lt; token</span>
-<span class="s">&lt;content&gt;</span>
-<span class="s">token</span>
+<div class="highlight"><pre><span></span><code>command &lt;&lt; token
+&lt;content&gt;
+token
 </code></pre></div>
 
 <p>where a <code>token</code> can be any string, used to mark the beginning and end of the content.</p>
 <p>Let's write a shell script to produce a HTML web page.</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># A script to produce an HTML file</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+# A script to produce an HTML file
 
-cat <span class="s">&lt;&lt; _HSTKN_</span>
-<span class="s">    &lt;html&gt;</span>
-<span class="s">    &lt;head&gt;</span>
-<span class="s">            &lt;title&gt;</span>
-<span class="s">            Page Title</span>
-<span class="s">            &lt;/title&gt;</span>
-<span class="s">  &lt;/head&gt;</span>
+cat &lt;&lt; _HSTKN_
+    &lt;html&gt;
+    &lt;head&gt;
+            &lt;title&gt;
+            Page Title
+            &lt;/title&gt;
+  &lt;/head&gt;
 
-<span class="s">  &lt;body&gt;</span>
-<span class="s">        Body</span>
-<span class="s">  &lt;/body&gt;</span>
-<span class="s">  &lt;/html&gt;</span>
-<span class="s">_HSTKN_</span>
+  &lt;body&gt;
+        Body
+  &lt;/body&gt;
+  &lt;/html&gt;
+_HSTKN_
 </code></pre></div>
 
 <p>Changing the the "&lt;&lt;" to "&lt;&lt;-" causes bash to ignore the leading tabs (but not spaces) in the here script. Now, we can produce an HTML by simply running the script, and redirecting output to a <code>.html</code> file.</p>
@@ -1238,99 +1238,99 @@ cat <span class="s">&lt;&lt; _HSTKN_</span>
 <p>Like other languages, bash uses variables to store values. Variables are given lowercase names by conventions that begin with a letter and cannot contain spaces/punctuation (underscores are allowed.)</p>
 <h4 id="creating-variables">Creating variables<a class="headerlink" href="#creating-variables" title="Permanent link">&para;</a></h4>
 <p>When you need the <strong>name</strong> of a variable, you write <strong>only the name</strong>, for example</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># to set variables</span>
-<span class="nv">picture</span><span class="o">=</span>/usr/share/images/foo.png
+<div class="highlight"><pre><span></span><code># to set variables
+picture=/usr/share/images/foo.png
 
-<span class="c1"># to name variables to be used by the read builtin command</span>
-<span class="nb">read</span> picture
+# to name variables to be used by the read builtin command
+read picture
 
-<span class="c1"># to name variables to be unset</span>
-<span class="nb">unset</span> picture
+# to name variables to be unset
+unset picture
 </code></pre></div>
 
 <h4 id="whitespace">Whitespace<a class="headerlink" href="#whitespace" title="Permanent link">&para;</a></h4>
 <p>Putting spaces on either or both sides of the equal-sign (<code>=</code>) when assigning a value to a variable <strong>will</strong> fail. The only valid form is <strong>no spaces between the variable name and assigned value</strong></p>
 <h4 id="using-variables">Using variables<a class="headerlink" href="#using-variables" title="Permanent link">&para;</a></h4>
 <p>When you need the <strong>content</strong> of a variable (called <em>expanding</em>), you prefix its name with <strong>a dollar-sign</strong>, like</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span> <span class="s2">&quot;The used picture is: </span><span class="nv">$picture</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code>echo &quot;The used picture is: $picture&quot;
 </code></pre></div>
 
 <p>Note that within Arithmetic expressions, the dollar sign is not needed</p>
-<div class="highlight"><pre><span></span><code><span class="nv">a</span><span class="o">=</span><span class="m">5</span>
-<span class="o">((</span><span class="nv">b</span><span class="o">=</span>a+5<span class="o">))</span>
-<span class="nb">echo</span> <span class="nv">$b</span>
+<div class="highlight"><pre><span></span><code>a=5
+((b=a+5))
+echo $b
 </code></pre></div>
 
 <h4 id="defaults">Defaults<a class="headerlink" href="#defaults" title="Permanent link">&para;</a></h4>
 <h5 id="using-default-values">Using default values<a class="headerlink" href="#using-default-values" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">PARAMETER</span><span class="k">:-</span><span class="nv">WORD</span><span class="si">}</span>
+<div class="highlight"><pre><span></span><code>${PARAMETER:-WORD}
 </code></pre></div>
 
 <p>If <code>PARAMETER</code> is unset (never was defined) or null (empty), this one expands to <code>WORD</code>, otherwise it expands to the value of <code>PARAMETER</code>, as if it just was <code>${PARAMETER}</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">PARAMETER</span><span class="p">-WORD</span><span class="si">}</span>
+<div class="highlight"><pre><span></span><code>${PARAMETER-WORD}
 </code></pre></div>
 
 <p>If you omit the <code>:</code> (colon), , the default value is only used when the parameter was <strong>unset</strong>, not when it was empty.</p>
 <h5 id="setting-default-values">Setting default values<a class="headerlink" href="#setting-default-values" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">PARAMETER</span><span class="p">:=WORD</span><span class="si">}</span>
+<div class="highlight"><pre><span></span><code>${PARAMETER:=WORD}
 </code></pre></div>
 
 <p>The default text <em>WORD</em> is expanded and <strong>assigned</strong> to the parameter, if it was unset or null.</p>
-<div class="highlight"><pre><span></span><code><span class="si">${</span><span class="nv">PARAMETER</span><span class="p">=WORD</span><span class="si">}</span>
+<div class="highlight"><pre><span></span><code>${PARAMETER=WORD}
 </code></pre></div>
 
 <p>This works only if <code>PARAMETER</code> was unset.</p>
 <p><strong>Example</strong></p>
 <p>If reading input from user, or picking up passed parameters, use</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nb">echo</span> <span class="s2">&quot;Press Y to continue, N to exit&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;You have 5 seconds to choose&quot;</span>
-<span class="nb">read</span> -t <span class="m">5</span>
-<span class="nv">choice</span><span class="o">=</span><span class="si">${</span><span class="nv">REPLY</span><span class="k">:-</span><span class="nv">N</span><span class="si">}</span>
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$choice</span> <span class="o">=</span> <span class="s2">&quot;Y&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Moving on.&quot;</span>
-<span class="k">else</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Terminating.&quot;</span>
-<span class="k">fi</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+echo &quot;Press Y to continue, N to exit&quot;
+echo &quot;You have 5 seconds to choose&quot;
+read -t 5
+choice=${REPLY:-N}
+if [ $choice = &quot;Y&quot; ]; then
+    echo &quot;Moving on.&quot;
+else
+    echo &quot;Terminating.&quot;
+fi
 </code></pre></div>
 
 <h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h4>
 <p>These are special variables set up by the <em>startup files</em> when a session starts. Commands like <code>env, printenv, set</code> can be used to inspect available environment variables.</p>
 <p>Environment variables are treated more like <em>constants</em> as they rarely change, and are given uppercase names by convention.</p>
 <p>Let's modify our here-script to use variables</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># A script to produce an HTML file</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+# A script to produce an HTML file
 
-<span class="nv">page_title</span><span class="o">=</span><span class="s2">&quot;System Information&quot;</span>
+page_title=&quot;System Information&quot;
 
-cat <span class="s">&lt;&lt; _HSTKN_</span>
-<span class="s">    &lt;html&gt;</span>
-<span class="s">    &lt;head&gt;</span>
-<span class="s">            &lt;title&gt;</span>
-<span class="s">            $page_title</span>
-<span class="s">            &lt;/title&gt;</span>
-<span class="s">  &lt;/head&gt;</span>
+cat &lt;&lt; _HSTKN_
+    &lt;html&gt;
+    &lt;head&gt;
+            &lt;title&gt;
+            $page_title
+            &lt;/title&gt;
+  &lt;/head&gt;
 
-<span class="s">  &lt;body&gt;</span>
-<span class="s">        &lt;h1&gt;$USER on $HOSTNAME&lt;/h1&gt;</span>
-<span class="s">  &lt;/body&gt;</span>
-<span class="s">  &lt;/html&gt;</span>
-<span class="s">_HSTKN_</span>
+  &lt;body&gt;
+        &lt;h1&gt;$USER on $HOSTNAME&lt;/h1&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+_HSTKN_
 </code></pre></div>
 
 <h4 id="variable-scoping">Variable Scoping<a class="headerlink" href="#variable-scoping" title="Permanent link">&para;</a></h4>
 <p>In Bash, the scope of user variables is generally <em>global</em>. That means, it does <strong>not</strong> matter whether a variable is set in the "main program" or in a "function", the variable is defined everywhere.</p>
 <p>Compare the following <em>equivalent</em> code snippets:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">myvariable</span><span class="o">=</span><span class="nb">test</span>
-<span class="nb">echo</span> <span class="nv">$myvariable</span>
+<div class="highlight"><pre><span></span><code>myvariable=test
+echo $myvariable
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code>myfunction<span class="o">()</span> <span class="o">{</span>
-  <span class="nv">myvariable</span><span class="o">=</span><span class="nb">test</span>
-<span class="o">}</span>
+<div class="highlight"><pre><span></span><code>myfunction() {
+  myvariable=test
+}
 
 myfunction
-<span class="nb">echo</span> <span class="nv">$myvariable</span>
+echo $myvariable
 </code></pre></div>
 
 <p>In both cases, the variable <code>myvariable</code> is set and accessible from everywhere in that script, both in functions and in the "main program".</p>
@@ -1340,131 +1340,131 @@ When you set variables in a child process, for example a <em>subshell</em> (when
 </blockquote>
 <h4 id="declare-and-local"><code>declare</code> and <code>local</code><a class="headerlink" href="#declare-and-local" title="Permanent link">&para;</a></h4>
 <p>Variables defined using the <em>local</em> keyword (or the <code>declare</code> command) tags a variable to be treated completely local and separate inside the function where it was declared.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">foo</span><span class="o">=</span>external
+<div class="highlight"><pre><span></span><code>foo=external
 
-printvalue<span class="o">()</span> <span class="o">{</span>
-<span class="nb">local</span> <span class="nv">foo</span><span class="o">=</span>internal
-<span class="nb">echo</span> <span class="nv">$foo</span>
-<span class="o">}</span>
+printvalue() {
+local foo=internal
+echo $foo
+}
 
-<span class="nb">echo</span> <span class="nv">$foo</span> <span class="c1"># this will print &quot;external&quot;</span>
-printvalue <span class="c1"># this will print &quot;internal&quot;</span>
+echo $foo # this will print &quot;external&quot;
+printvalue # this will print &quot;internal&quot;
 </code></pre></div>
 
 <h4 id="export"><code>export</code><a class="headerlink" href="#export" title="Permanent link">&para;</a></h4>
 <p>Every UNIX process runs in a so-called <em>environment</em>, within which are contained the so-called <em>environment variables.</em> Whenever a child process is created, the whole environment is copied to the new process and thus every child process has access to all environment variables.</p>
 <p>To create environment variables, use</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">NEW_ENV_VAR</span><span class="o">=</span>value
+<div class="highlight"><pre><span></span><code>export NEW_ENV_VAR=value
 </code></pre></div>
 
 <h2 id="07-7-using-commands-in-scripts">07-7 Using commands in Scripts<a class="headerlink" href="#07-7-using-commands-in-scripts" title="Permanent link">&para;</a></h2>
 <p>Let's use <em>command substitution</em> to pass the output of a command to the content of a script. Recall that this can be done using <code>$(command)</code> This is preferred over using back-ticks.</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># A script to produce an HTML file</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+# A script to produce an HTML file
 
-<span class="nv">page_title</span><span class="o">=</span><span class="s2">&quot;System Information&quot;</span>
+page_title=&quot;System Information&quot;
 
-cat <span class="s">&lt;&lt; _HSTKN_</span>
-<span class="s">    &lt;html&gt;</span>
-<span class="s">    &lt;head&gt;</span>
-<span class="s">            &lt;title&gt;</span>
-<span class="s">            $page_title</span>
-<span class="s">            &lt;/title&gt;</span>
-<span class="s">  &lt;/head&gt;</span>
+cat &lt;&lt; _HSTKN_
+    &lt;html&gt;
+    &lt;head&gt;
+            &lt;title&gt;
+            $page_title
+            &lt;/title&gt;
+  &lt;/head&gt;
 
-<span class="s">  &lt;body&gt;</span>
-<span class="s">        &lt;h1&gt;Machine $HOSTNAME&lt;/h1&gt;</span>
-<span class="s">        &lt;p&gt;Updated on $(date) by $USER&lt;/p&gt;</span>
-<span class="s">  &lt;/body&gt;</span>
-<span class="s">  &lt;/html&gt;</span>
-<span class="s">_HSTKN_</span>
+  &lt;body&gt;
+        &lt;h1&gt;Machine $HOSTNAME&lt;/h1&gt;
+        &lt;p&gt;Updated on $(date) by $USER&lt;/p&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+_HSTKN_
 </code></pre></div>
 
 <h2 id="07-8-shell-functions">07-8 Shell Functions<a class="headerlink" href="#07-8-shell-functions" title="Permanent link">&para;</a></h2>
 <p>With <em>shell functions</em> we can create commands to do what existing commands cannot. They must be declared in the script before you use them. The function body must contain at least one valid command (<code>return</code> or <code>echo</code> is acceptable as a placeholder.)</p>
 <p>Functions syntax</p>
-<div class="highlight"><pre><span></span><code>function_name<span class="o">()</span>
-<span class="o">{</span>
-    <span class="nb">echo</span> <span class="s2">&quot;This is a function.&quot;</span>
-<span class="o">}</span>
+<div class="highlight"><pre><span></span><code>function_name()
+{
+    echo &quot;This is a function.&quot;
+}
 </code></pre></div>
 
 <p>Let's return to our HTML producing shell script and write functions to produce additional system info</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># A script to produce an HTML file</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+# A script to produce an HTML file
 
-<span class="nv">page_title</span><span class="o">=</span><span class="s2">&quot;System Information&quot;</span>
+page_title=&quot;System Information&quot;
 
-show_uptime<span class="o">()</span>
-<span class="o">{</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;h2&gt;System has been running for&lt;/h2&gt;&quot;</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;pre&gt;&quot;</span>
+show_uptime()
+{
+        echo &quot;&lt;h2&gt;System has been running for&lt;/h2&gt;&quot;
+        echo &quot;&lt;pre&gt;&quot;
         uptime
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;/pre&gt;&quot;</span>
-<span class="o">}</span>
+        echo &quot;&lt;/pre&gt;&quot;
+}
 
-show_drive_space<span class="o">()</span>
-<span class="o">{</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;h2&gt;Filesystem Space&lt;/h2&gt;&quot;</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;pre&gt;&quot;</span>
+show_drive_space()
+{
+        echo &quot;&lt;h2&gt;Filesystem Space&lt;/h2&gt;&quot;
+        echo &quot;&lt;pre&gt;&quot;
         df
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;/pre&gt;&quot;</span>
-<span class="o">}</span>
+        echo &quot;&lt;/pre&gt;&quot;
+}
 
-show_home_space<span class="o">()</span>
-<span class="o">{</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;h2&gt;Home Directory Size&lt;/h2&gt;&quot;</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;pre&gt;&quot;</span>
-        du -s <span class="nv">$HOME</span>/* <span class="p">|</span> sort -nr
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;/pre&gt;&quot;</span>
-<span class="o">}</span>
+show_home_space()
+{
+        echo &quot;&lt;h2&gt;Home Directory Size&lt;/h2&gt;&quot;
+        echo &quot;&lt;pre&gt;&quot;
+        du -s $HOME/* | sort -nr
+        echo &quot;&lt;/pre&gt;&quot;
+}
 
-show_system_info<span class="o">()</span>
-<span class="o">{</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;h2&gt;System release info&lt;/h2&gt;&quot;</span>
-        <span class="nb">echo</span> <span class="s2">&quot;&lt;p&gt;To be implemented&lt;/p&gt;&quot;</span>
-<span class="o">}</span>
+show_system_info()
+{
+        echo &quot;&lt;h2&gt;System release info&lt;/h2&gt;&quot;
+        echo &quot;&lt;p&gt;To be implemented&lt;/p&gt;&quot;
+}
 
-cat <span class="s">&lt;&lt; _HSTKN_</span>
-<span class="s">    &lt;html&gt;</span>
-<span class="s">    &lt;head&gt;</span>
-<span class="s">            &lt;title&gt;</span>
-<span class="s">            $page_title</span>
-<span class="s">            &lt;/title&gt;</span>
-<span class="s">  &lt;/head&gt;</span>
+cat &lt;&lt; _HSTKN_
+    &lt;html&gt;
+    &lt;head&gt;
+            &lt;title&gt;
+            $page_title
+            &lt;/title&gt;
+  &lt;/head&gt;
 
-<span class="s">  &lt;body&gt;</span>
-<span class="s">        &lt;h1&gt;Machine $HOSTNAME&lt;/h1&gt;</span>
-<span class="s">        &lt;p&gt;Updated on $(date) by $USER&lt;/p&gt;</span>
-<span class="s">        $(show_uptime)</span>
-<span class="s">            $(show_drive_space)</span>
-<span class="s">            $(show_home_space)</span>
-<span class="s">            $(show_system_info)     </span>
-<span class="s">  &lt;/body&gt;</span>
-<span class="s">  &lt;/html&gt;</span>
-<span class="s">_HSTKN_</span>
+  &lt;body&gt;
+        &lt;h1&gt;Machine $HOSTNAME&lt;/h1&gt;
+        &lt;p&gt;Updated on $(date) by $USER&lt;/p&gt;
+        $(show_uptime)
+            $(show_drive_space)
+            $(show_home_space)
+            $(show_system_info)     
+  &lt;/body&gt;
+  &lt;/html&gt;
+_HSTKN_
 </code></pre></div>
 
 <h1 id="08-flow-control">08 - Flow Control<a class="headerlink" href="#08-flow-control" title="Permanent link">&para;</a></h1>
 <p>To add intelligence to our script, we make use of commands such as <code>if, test, exit</code></p>
 <h2 id="08-1-if">08-1 <code>if</code><a class="headerlink" href="#08-1-if" title="Permanent link">&para;</a></h2>
 <p>It makes a decision based on the <em>exit status</em> of a command. Syntax:</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span> commands<span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><pre><span></span><code>if commands; then
 commands
-<span class="o">[</span><span class="k">elif</span> commands<span class="p">;</span> <span class="k">then</span>
-commands ...<span class="o">]</span>
-<span class="o">[</span><span class="k">else</span>
-commands<span class="o">]</span>
-<span class="k">fi</span>
+[elif commands; then
+commands ...]
+[else
+commands]
+fi
 </code></pre></div>
 
 <p>What the <code>if</code> statement really does is evaluate the success or failure of commands.  The <code>test</code> command is used most often with the <code>if</code> command to perform true/false decisions. If the given expression is true, <code>test</code> exits with a status of zero; otherwise it exits with a status of 1.</p>
 <p>Note that indentation is not required, but is considered good practice to improve readability.</p>
 <p>It is unusual in that it has two different syntactic forms:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Testing if a command returns true (exit status 0)</span>
-<span class="nb">test</span> &lt;expression&gt;
-<span class="c1"># or</span>
-<span class="o">[</span> &lt;expression&gt; <span class="o">]</span>
+<div class="highlight"><pre><span></span><code># Testing if a command returns true (exit status 0)
+test &lt;expression&gt;
+# or
+[ &lt;expression&gt; ]
 </code></pre></div>
 
 <p>Note that the spaces between the square brackets and the beginning and end of the expression are required.</p>
@@ -1532,26 +1532,26 @@ commands<span class="o">]</span>
 </tbody>
 </table>
 <p>The syntax can be written out in a few different forms</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># preferred form</span>
-<span class="k">if</span> <span class="o">[</span> -f .bash_profile <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;You have a .bash_profile. Things are fine.&quot;</span>
-<span class="k">else</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Yikes! You have no .bash_profile!&quot;</span>
-<span class="k">fi</span>
+<div class="highlight"><pre><span></span><code># preferred form
+if [ -f .bash_profile ]; then
+    echo &quot;You have a .bash_profile. Things are fine.&quot;
+else
+    echo &quot;Yikes! You have no .bash_profile!&quot;
+fi
 
-<span class="c1"># alternate 1</span>
-<span class="k">if</span> <span class="o">[</span> -f .bash_profile <span class="o">]</span>
-<span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;You have a .bash_profile. Things are fine.&quot;</span>
-<span class="k">else</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Yikes! You have no .bash_profile!&quot;</span>
-<span class="k">fi</span>
+# alternate 1
+if [ -f .bash_profile ]
+then
+    echo &quot;You have a .bash_profile. Things are fine.&quot;
+else
+    echo &quot;Yikes! You have no .bash_profile!&quot;
+fi
 
-<span class="c1"># alternate 2</span>
-<span class="k">if</span> <span class="o">[</span> -f .bash_profile <span class="o">]</span>
-<span class="k">then</span> <span class="nb">echo</span> <span class="s2">&quot;You have a .bash_profile. Things are fine.&quot;</span>
-<span class="k">else</span> <span class="nb">echo</span> <span class="s2">&quot;Yikes! You have no .bash_profile!&quot;</span>
-<span class="k">fi</span>
+# alternate 2
+if [ -f .bash_profile ]
+then echo &quot;You have a .bash_profile. Things are fine.&quot;
+else echo &quot;Yikes! You have no .bash_profile!&quot;
+fi
 </code></pre></div>
 
 <h3 id="exit">exit<a class="headerlink" href="#exit" title="Permanent link">&para;</a></h3>
@@ -1559,12 +1559,12 @@ commands<span class="o">]</span>
 <h3 id="testing-for-superuser">Testing for superuser<a class="headerlink" href="#testing-for-superuser" title="Permanent link">&para;</a></h3>
 <p>For scripts that can only be run by a superuser, we can use the <code>id</code> command to check if the user attempting to execute the script has root access.</p>
 <p>For a superuser, the <code>id -u</code> command returns a <code>0</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> <span class="s2">&quot;Welcome, superuser.&quot;</span>
-<span class="k">else</span>
-        <span class="nb">echo</span> <span class="s2">&quot;Only a superuser can run this script.&quot;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
-        <span class="nb">exit</span> <span class="m">1</span>
-<span class="k">fi</span>
+<div class="highlight"><pre><span></span><code>if [ &quot;$(id -u)&quot; = &quot;0&quot; ]; then
+        echo &quot;Welcome, superuser.&quot;
+else
+        echo &quot;Only a superuser can run this script.&quot; &gt;&amp;2
+        exit 1
+fi
 </code></pre></div>
 
 <p>Note the <code>&gt;&amp;2</code> at the end of the <code>echo</code> command in the <code>else</code> block. This is a way of I/O redirection, that sends the error message to STDERR instead of STDOUT. This is a useful feature, it prevents error messages to be written to the output file of a script.</p>
@@ -1573,9 +1573,9 @@ commands<span class="o">]</span>
 <p>Unlike the simple binary branching created with <code>if</code>,
 a <code>case</code> supports several possible outcomes based on the evaluation of a value.</p>
 <p><strong>Syntax</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">case</span> word in
-    patterns <span class="o">)</span> commands <span class="p">;;</span>
-<span class="k">esac</span>
+<div class="highlight"><pre><span></span><code>case word in
+    patterns ) commands ;;
+esac
 </code></pre></div>
 
 <ul>
@@ -1584,15 +1584,14 @@ a <code>case</code> supports several possible outcomes based on the evaluation o
 <li>You can have multiple patterns separated by the "<code>|</code>" character.</li>
 </ul>
 <p><strong>Example</strong></p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-
-<span class="nb">echo</span> -n <span class="s2">&quot;Please enter a character: &quot;</span>
-<span class="nb">read</span> char
-<span class="k">case</span> <span class="nv">$char</span> in
-                        <span class="o">[</span><span class="m">0</span>-9<span class="o">]</span> <span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;You entered a number.&quot;</span><span class="p">;;</span>
-    <span class="o">[[</span>:lower:<span class="o">]]</span> <span class="p">|</span> <span class="o">[[</span>:upper:<span class="o">]]</span> <span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;You entered an alphabet.&quot;</span><span class="p">;;</span>
-                            * <span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;Entered character is not alphanumeric.&quot;</span>
-<span class="k">esac</span>                            
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+echo -n &quot;Please enter a character: &quot;
+read char
+case $char in
+                        [0-9] ) echo &quot;You entered a number.&quot;;;
+    [[:lower:]] | [[:upper:]] ) echo &quot;You entered an alphabet.&quot;;;
+                            * ) echo &quot;Entered character is not alphanumeric.&quot;;;
+esac                            
 </code></pre></div>
 
 <h2 id="08-3-loops">08-3 Loops<a class="headerlink" href="#08-3-loops" title="Permanent link">&para;</a></h2>
@@ -1608,18 +1607,18 @@ a <code>case</code> supports several possible outcomes based on the evaluation o
 </li>
 </ul>
 <p>Syntax</p>
-<div class="highlight"><pre><span></span><code><span class="k">while</span> <span class="o">[</span> condition <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+<div class="highlight"><pre><span></span><code>while [ condition ]; do
     actions
-<span class="k">done</span>
+done
 </code></pre></div>
 
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">number</span><span class="o">=</span><span class="m">0</span>
-<span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$number</span><span class="s2">&quot;</span> -lt <span class="m">10</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Number = </span><span class="nv">$number</span><span class="s2">&quot;</span>
-    <span class="nv">number</span><span class="o">=</span><span class="k">$((</span>number <span class="o">+</span> <span class="m">1</span><span class="k">))</span>
-<span class="k">done</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+number=0
+while [ &quot;$number&quot; -lt 10 ]; do
+    echo &quot;Number = $number&quot;
+    number=$((number + 1))
+done
 </code></pre></div>
 
 <h4 id="until"><code>until</code><a class="headerlink" href="#until" title="Permanent link">&para;</a></h4>
@@ -1628,27 +1627,26 @@ a <code>case</code> supports several possible outcomes based on the evaluation o
   except the block of code is repeated as long as the specified command's exit status is <em>false</em>.</li>
 </ul>
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
 
-<span class="nv">selection</span><span class="o">=</span>
-<span class="k">until</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$selection</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
-    <span class="nb">echo</span> <span class="s2">&quot;</span>
-<span class="s2">    PROGRAM MENU</span>
-<span class="s2">    1 - Display free disk space</span>
-<span class="s2">    2 - Display free memory</span>
-
-<span class="s2">    0 - exit program</span>
-<span class="s2">&quot;</span>
-    <span class="nb">echo</span> -n <span class="s2">&quot;Enter selection: &quot;</span>
-    <span class="nb">read</span> selection
-    <span class="nb">echo</span> <span class="s2">&quot;&quot;</span>
-    <span class="k">case</span> <span class="nv">$selection</span> in
-        <span class="m">1</span> <span class="o">)</span> df <span class="p">;;</span>
-        <span class="m">2</span> <span class="o">)</span> free <span class="p">;;</span>
-        <span class="m">0</span> <span class="o">)</span> <span class="nb">exit</span> <span class="p">;;</span>
-        * <span class="o">)</span> <span class="nb">echo</span> <span class="s2">&quot;Please enter 1, 2, or 0&quot;</span>
-    <span class="k">esac</span>
-<span class="k">done</span>
+selection=
+until [ &quot;$selection&quot; = &quot;0&quot; ]; do
+    echo &quot;
+    PROGRAM MENU
+    1 - Display free disk space
+    2 - Display free memory
+    0 - exit program
+&quot;
+    echo -n &quot;Enter selection: &quot;
+    read selection
+    echo &quot;&quot;
+    case $selection in
+        1 ) df ;;
+        2 ) free ;;
+        0 ) exit ;;
+        * ) echo &quot;Please enter 1, 2, or 0&quot; ;;
+    esac
+done
 </code></pre></div>
 
 <h4 id="for"><code>for</code><a class="headerlink" href="#for" title="Permanent link">&para;</a></h4>
@@ -1660,16 +1658,16 @@ Here's how it works:</p>
 <li>repeats this over and over until the list is empty.</li>
 </ul>
 <p>Syntax</p>
-<div class="highlight"><pre><span></span><code><span class="k">for</span> variable in list<span class="p">;</span> <span class="k">do</span>
+<div class="highlight"><pre><span></span><code>for variable in list; do
     commands
-<span class="k">done</span>
+done
 </code></pre></div>
 
 <p>The interesting thing about <code>for</code> is the many ways you can construct the list of words.
 All kinds of expansions can be used.</p>
 <h1 id="09-troubleshooting">09 - Troubleshooting<a class="headerlink" href="#09-troubleshooting" title="Permanent link">&para;</a></h1>
 <p>When bash encounters a syntax error, it halts program execution with an error message, such as</p>
-<div class="highlight"><pre><span></span><code>./myscript.sh: <span class="o">[</span>: <span class="o">=</span>: unary operator expected
+<div class="highlight"><pre><span></span><code>./myscript.sh: [: =: unary operator expected]
 </code></pre></div>
 
 <p>Here, the shell is trying to tell us is that there is only one item around the '=' (a binary operator).
@@ -1690,68 +1688,68 @@ There should be a unary operator (like "<code>!</code>") that only operates on a
 <h4 id="empty-variables">Empty Variables<a class="headerlink" href="#empty-variables" title="Permanent link">&para;</a></h4>
 <p>Writing <code>some_variable=</code> is perfectly OK syntax, used to set a variable's value to <em>nothing</em> (null.) However, we must be careful when using such empty variables in a conditional statement.</p>
 <p>Consider,</p>
-<div class="highlight"><pre><span></span><code><span class="nv">number</span><span class="o">=</span>
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$number</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Number equals 1&quot;</span>
+<div class="highlight"><pre><span></span><code>number=
+if [ $number = &quot;1&quot;]; then
+    echo &quot;Number equals 1&quot;
 </code></pre></div>
 
 <p>What the shell will essentially see is</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="o">[</span>  <span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><pre><span></span><code>if [  = &quot;1&quot; ]; then
 </code></pre></div>
 
 <p>and produce an error, because <code>=</code> being a binary operator expects two arguments to work with. Since there is only one argument, the shell will think that there should be a unary operator here instead.</p>
 <p>To fix this, whenever we have a variable that could be empty, use</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$number</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><pre><span></span><code>if [ &quot;$number&quot; = &quot;1&quot; ]; then
 </code></pre></div>
 
 <p>which will expand to</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;&quot;</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><pre><span></span><code>if [ &quot;&quot; = &quot;1&quot; ]; then
 </code></pre></div>
 
 <p>and the condition will be evaluated without error.</p>
 <p>Two more options to deal with potentially empty variables:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># use double square brackets</span>
-<span class="k">if</span> <span class="o">[[</span> <span class="k">$(</span>grep text file<span class="k">)</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><pre><span></span><code># use double square brackets
+if [[ $(grep text file) = &#39;&#39; ]]; then
 ...
 
-<span class="c1"># use pad variable</span>
-<span class="k">if</span> <span class="o">[[</span> x<span class="k">$(</span>grep text file<span class="k">)</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+# use pad variable
+if [[ x$(grep text file) = &#39;x&#39; ]]; then
 ...
 </code></pre></div>
 
 <h4 id="missing-quotes">Missing Quotes<a class="headerlink" href="#missing-quotes" title="Permanent link">&para;</a></h4>
 <p>If you forget to supply closing quotation marks, the script will fail with an error such as</p>
-<div class="highlight"><pre><span></span><code>./myscript: line <span class="m">8</span>: unexpected EOF <span class="k">while</span> looking <span class="k">for</span> matching <span class="s2">&quot;</span>
-<span class="s2">./myscript: line 10 syntax error: unexpected end of file</span>
+<div class="highlight"><pre><span></span><code>./myscript: line 8: unexpected EOF while looking for matching &quot;
+./myscript: line 10 syntax error: unexpected end of file
 </code></pre></div>
 
 <p>This happens because the shell keeps looking for the closing quotes to mark the end of the string but runs into the EOF before it finds them.</p>
 <h4 id="the-set-command">The <code>set</code> command<a class="headerlink" href="#the-set-command" title="Permanent link">&para;</a></h4>
 <p>To see what bash is doing when it starts to run your script, use the <code>-x</code> switch in the shebang</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash -x</span>
-<span class="c1"># or</span>
-<span class="nb">set</span> -x
+<div class="highlight"><pre><span></span><code>#!/bin/bash -x
+# or
+set -x
 </code></pre></div>
 
 <p>Now, when you run your script, bash will display each line (with expansions performed) as it executes it. This technique is called <em>tracing</em>.</p>
 <p>Alternately, you can use the <code>set</code> command within your script to turn tracing on and off.
 Use <code>set -x</code> to turn tracing on and <code>set +x</code> to turn tracing off.</p>
 <p>For example</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">number</span><span class="o">=</span><span class="m">1</span>
-<span class="nb">set</span> -x
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$number</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Number equals 1&quot;</span>
-<span class="k">else</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Number does not equal 1&quot;</span>
-<span class="k">fi</span>
-<span class="nb">set</span> +x       
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+number=1
+set -x
+if [ $number = &quot;1&quot; ]; then
+    echo &quot;Number equals 1&quot;
+else
+    echo &quot;Number does not equal 1&quot;
+fi
+set +x       
 </code></pre></div>
 
 <p>To make bash exit a script if any command fails (returns nonzero exit code)</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash -e</span>
-<span class="c1"># or</span>
-<span class="nb">set</span> -e
+<div class="highlight"><pre><span></span><code>#!/bin/bash -e
+# or
+set -e
 </code></pre></div>
 
 <h1 id="10-user-input-and-arithmetic">10 - User Input and Arithmetic<a class="headerlink" href="#10-user-input-and-arithmetic" title="Permanent link">&para;</a></h1>
@@ -1768,32 +1766,32 @@ Use <code>set -x</code> to turn tracing on and <code>set +x</code> to turn traci
 <li>The <code>-s</code> option causes the user's typing not to be displayed. This is useful when you are asking the user to type in a password or other confidential information.</li>
 </ul>
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nb">echo</span> -n <span class="s2">&quot;What is your name &gt; &quot;</span>
-<span class="nb">read</span> name
-<span class="nb">echo</span> <span class="s2">&quot;Hello, </span><span class="nv">$name</span><span class="s2">. Have a good day.&quot;</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+echo -n &quot;What is your name &gt; &quot;
+read name
+echo &quot;Hello, $name. Have a good day.&quot;
 </code></pre></div>
 
 <p>Note that "<code>-n</code>" given to the <code>echo</code> command causes it to keep the cursor on the same line.</p>
 <h4 id="read-with-timeout"><code>read</code> with timeout<a class="headerlink" href="#read-with-timeout" title="Permanent link">&para;</a></h4>
 <p>Use it inside an <code>if</code> block,</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nb">echo</span> -n <span class="s2">&quot;Press Y to continue. &quot;</span>
-<span class="k">if</span> <span class="nb">read</span> -t <span class="m">5</span> choice<span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Cool, moving on.&quot;</span>
-<span class="k">else</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Quitting.&quot;</span>
-<span class="k">fi</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+echo -n &quot;Press Y to continue. &quot;
+if read -t 5 choice; then
+    echo &quot;Cool, moving on.&quot;
+else
+    echo &quot;Quitting.&quot;
+fi
 </code></pre></div>
 
 <p>Or use it to assign a default value</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">TMOUT</span><span class="o">=</span><span class="m">5</span>
-<span class="nb">echo</span> What is your name?
-<span class="nb">echo</span> You have <span class="m">5</span> seconds to respond...
-<span class="nb">read</span>
-<span class="nv">username</span><span class="o">=</span><span class="si">${</span><span class="nv">REPLY</span><span class="k">:-</span><span class="nv">new_user</span><span class="si">}</span>
-<span class="nb">echo</span> Hello, <span class="nv">$username</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+TMOUT=5
+echo What is your name?
+echo You have 5 seconds to respond...
+read
+username=${REPLY:-new_user}
+echo Hello, $username
 </code></pre></div>
 
 <p>This example makes use of the <code>TMOUT</code> shell variable, and assigns a default value to the variable.</p>
@@ -1805,27 +1803,27 @@ Use <code>set -x</code> to turn tracing on and <code>set +x</code> to turn traci
   The leading "<code>$</code>" is not needed to reference variables inside the arithmetic expression.
   Whitespaces are ignored.</li>
 </ul>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> <span class="k">$((</span><span class="m">2</span><span class="o">+</span><span class="m">3</span><span class="k">))</span>
-$ <span class="nb">echo</span> <span class="k">$((</span>a <span class="o">*</span> b<span class="k">))</span>
+<div class="highlight"><pre><span></span><code>$ echo $((2+3))
+$ echo $((a * b))
 </code></pre></div>
 
 <ul>
 <li>We can perform BEDMAS operations</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">num_1</span><span class="o">=</span><span class="m">0</span>
-<span class="nv">num_2</span><span class="o">=</span><span class="m">0</span>
-<span class="nb">echo</span> -n <span class="s2">&quot;Enter first number: &quot;</span>
-<span class="nb">read</span> num_1
-<span class="nb">echo</span> -n <span class="s2">&quot;Enter second number: &quot;</span>
-<span class="nb">read</span> num_2
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+num_1=0
+num_2=0
+echo -n &quot;Enter first number: &quot;
+read num_1
+echo -n &quot;Enter second number: &quot;
+read num_2
 
-<span class="nb">echo</span> <span class="s2">&quot;Add = </span><span class="k">$((</span>num_1 <span class="o">+</span> num_2<span class="k">))</span><span class="s2">&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Subtract = </span><span class="k">$((</span>num_1 <span class="o">-</span> num_2<span class="k">))</span><span class="s2">&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Multiply = </span><span class="k">$((</span>num_1 <span class="o">*</span> num_2<span class="k">))</span><span class="s2">&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Divide = </span><span class="k">$((</span>num_1 <span class="o">/</span> num_2<span class="k">))</span><span class="s2">&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Exponential = </span><span class="k">$((</span>num_1 <span class="o">**</span> num_2<span class="k">))</span><span class="s2">&quot;</span>
-<span class="nb">echo</span> <span class="s2">&quot;Modulo = </span><span class="k">$((</span>num_1 <span class="o">%</span> num_2<span class="k">))</span><span class="s2">&quot;</span>
+echo &quot;Add = $((num_1 + num_2))&quot;
+echo &quot;Subtract = $((num_1 - num_2))&quot;
+echo &quot;Multiply = $((num_1 * num_2))&quot;
+echo &quot;Divide = $((num_1 / num_2))&quot;
+echo &quot;Exponential = $((num_1 ** num_2))&quot;
+echo &quot;Modulo = $((num_1 % num_2))&quot;
 </code></pre></div>
 
 <ul>
@@ -1871,9 +1869,9 @@ $ <span class="nb">echo</span> <span class="k">$((</span>a <span class="o">*</sp
 </table>
 <h4 id="defaults-for-parameters">Defaults for parameters<a class="headerlink" href="#defaults-for-parameters" title="Permanent link">&para;</a></h4>
 <p>If an expected parameter is not supplied, it is possible to assign a default value using the syntax below. Now, if <code>$1</code> is empty, the variable FIRST_ARG will take the value "no_first_arg" .</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">FIRST_ARG</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">no_first_arg</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="nb">echo</span> <span class="si">${</span><span class="nv">FIRST_ARG</span><span class="si">}</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+FIRST_ARG=&quot;${1:-no_first_arg}&quot;
+echo ${FIRST_ARG}
 </code></pre></div>
 
 <h4 id="the-shift-command">The <code>shift</code> command<a class="headerlink" href="#the-shift-command" title="Permanent link">&para;</a></h4>
@@ -1884,40 +1882,40 @@ $ <span class="nb">echo</span> <span class="k">$((</span>a <span class="o">*</sp
 <li>When used inside a loop, <code>shift</code> enables us to read the <em>next</em> argument in the array.</li>
 </ul>
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nb">echo</span> <span class="s2">&quot;You supplied </span><span class="nv">$#</span><span class="s2"> positional arguments&quot;</span>
-<span class="k">while</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
-        <span class="nb">echo</span> <span class="s2">&quot;Flag: </span><span class="nv">$1</span><span class="s2">, Option: </span><span class="nv">$2</span><span class="s2">&quot;</span>
-        <span class="nb">shift</span> <span class="m">2</span>
-<span class="k">done</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+echo &quot;You supplied $# positional arguments&quot;
+while [ &quot;$1&quot; != &quot;&quot; ]; do
+        echo &quot;Flag: $1, Option: $2&quot;
+        shift 2
+done
 </code></pre></div>
 
 <h4 id="looping-through-arguments">Looping through arguments<a class="headerlink" href="#looping-through-arguments" title="Permanent link">&para;</a></h4>
 <p>The shell variable "$@" contains the list of command line arguments. This technique is often used to process a list of files on the command line.</p>
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
 
-<span class="k">for</span> filename in <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="p">;</span> <span class="k">do</span>
-    <span class="nv">result</span><span class="o">=</span>
+for filename in &quot;$@&quot;; do
+    result=
 
-    <span class="c1"># Check if exists</span>
-    <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&quot;</span><span class="nv">$filename</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nv">result</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$filename</span><span class="s2"> is a regular file&quot;</span>
-    <span class="k">else</span>
-        <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;</span><span class="nv">$filename</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-            <span class="nv">result</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$filename</span><span class="s2"> is a directory&quot;</span>
-        <span class="k">fi</span>
-    <span class="k">fi</span>
+    # Check if exists
+    if [ -f &quot;$filename&quot; ]; then
+        result=&quot;$filename is a regular file&quot;
+    else
+        if [ -d &quot;$filename&quot; ]; then
+            result=&quot;$filename is a directory&quot;
+        fi
+    fi
 
-    <span class="c1"># Check if writable</span>
-    <span class="k">if</span> <span class="o">[</span> -w <span class="s2">&quot;</span><span class="nv">$filename</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nv">result</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$result</span><span class="s2"> and it is writable&quot;</span>
-    <span class="k">else</span>
-        <span class="nv">result</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$result</span><span class="s2"> and it is not writable&quot;</span>
-    <span class="k">fi</span>
+    # Check if writable
+    if [ -w &quot;$filename&quot; ]; then
+        result=&quot;$result and it is writable&quot;
+    else
+        result=&quot;$result and it is not writable&quot;
+    fi
 
-    <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$result</span><span class="s2">&quot;</span>
-<span class="k">done</span>
+    echo &quot;$result&quot;
+done
 </code></pre></div>
 
 <h4 id="the-getopts-command">The <code>getopts</code> command<a class="headerlink" href="#the-getopts-command" title="Permanent link">&para;</a></h4>
@@ -1931,10 +1929,10 @@ $ <span class="nb">echo</span> <span class="k">$((</span>a <span class="o">*</sp
 </ul>
 <h4 id="checking-the-exit-status-with">Checking the Exit Status with <code>$?</code><a class="headerlink" href="#checking-the-exit-status-with" title="Permanent link">&para;</a></h4>
 <p>The environment variable <strong><code>$?</code></strong> contains the exit status of the last command executed.</p>
-<div class="highlight"><pre><span></span><code>$ true<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span>
-<span class="m">0</span>
-$ false<span class="p">;</span> <span class="nb">echo</span> <span class="nv">$?</span>
-<span class="m">1</span>
+<div class="highlight"><pre><span></span><code>$ true; echo $?
+0
+$ false; echo $?
+1
 </code></pre></div>
 
 <p>The <code>true</code> and <code>false</code> commands are programs that do nothing except return an exit status of zero and one, respectively.</p>
@@ -1946,54 +1944,54 @@ and not
  <code>0=success, 1=failure</code></p>
 </blockquote>
 <p>An example</p>
-<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nb">cd</span> <span class="nv">$1</span>
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><pre><span></span><code>#!/bin/bash
+cd $1
+if [ &quot;$?&quot; = &quot;0&quot; ]; then
     rm *
-<span class="k">else</span>
-    <span class="nb">echo</span> <span class="s2">&quot;Could not cd into </span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
-    <span class="nb">exit</span> <span class="m">1</span>
-<span class="k">fi</span>
+else
+    echo &quot;Could not cd into $1&quot; 1&gt;&amp;2
+    exit 1
+fi
 </code></pre></div>
 
 <p>This script will <code>cd</code> to a given directory, and empty it. If the <code>cd</code> command fails, it returns an error message and an exit code of 1 indicating that some error has occurred.</p>
 <h4 id="an-error-exit-function">An error exit function<a class="headerlink" href="#an-error-exit-function" title="Permanent link">&para;</a></h4>
 <p>Since we will be checking for errors often in our programs, it makes sense to write a function that will display error messages and return an error exit status.</p>
-<div class="highlight"><pre><span></span><code>error_exit<span class="o">()</span>
-<span class="o">{</span>
-    <span class="nb">echo</span> <span class="si">${</span><span class="nv">LINENO</span><span class="si">}</span>: <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
-    <span class="nb">exit</span> <span class="m">1</span>
-<span class="o">}</span>
+<div class="highlight"><pre><span></span><code>error_exit()
+{
+    echo ${LINENO}: &quot;$1&quot; 1&gt;&amp;2
+    exit 1
+}
 
-<span class="k">if</span> <span class="nb">cd</span> <span class="nv">$some_dir</span><span class="p">;</span> <span class="k">then</span>
+if cd $some_dir; then
     rm *
-<span class="k">else</span>
-    error_exit <span class="s2">&quot;Could not change directory. Aborting!&quot;</span>
-<span class="k">fi</span>
+else
+    error_exit &quot;Could not change directory. Aborting!&quot;
+fi
 </code></pre></div>
 
 <h4 id="and-or-lists"><code>AND, OR</code> lists<a class="headerlink" href="#and-or-lists" title="Permanent link">&para;</a></h4>
 <p>The control operators <code>&amp;&amp;</code> and <code>||</code> denote AND lists and OR lists, respectively and help  you execute a command based on whether or not the previous command completed successfully.</p>
-<div class="highlight"><pre><span></span><code>command1 <span class="o">&amp;&amp;</span> command2
-<span class="c1"># run command2 iff command1 is successful (exit status 0)</span>
+<div class="highlight"><pre><span></span><code>command1 &amp;&amp; command2
+# run command2 iff command1 is successful (exit status 0)
 
-command1 <span class="o">||</span> command2
-<span class="c1"># run command2 iff command1 fails (exit status != 0)</span>
+command1 || command2
+# run command2 iff command1 fails (exit status != 0)
 </code></pre></div>
 
 <p>The exit status of AND and OR lists is the exit status of the last command executed in the list.</p>
 <p>Examples</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">true</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;echo will run&quot;</span>
-$ <span class="nb">false</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;echo will not run&quot;</span>
-$ <span class="nb">true</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;echo will not run&quot;</span>
-$ <span class="nb">false</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;echo will run&quot;</span>
+<div class="highlight"><pre><span></span><code>$ true &amp;&amp; echo &quot;echo will run&quot;
+$ false &amp;&amp; echo &quot;echo will not run&quot;
+$ true || echo &quot;echo will not run&quot;
+$ false || echo &quot;echo will run&quot;
 </code></pre></div>
 
 <h4 id="cleaning-up-with-trap">Cleaning up with <code>trap</code><a class="headerlink" href="#cleaning-up-with-trap" title="Permanent link">&para;</a></h4>
 <p>Sometimes, a signal like SIGINT can come along and make your script terminate and leave behind unfinished tasks or temporary files. Good practice would dictate that we delete the temporary files when the script terminates - but how?</p>
 <p>The <code>trap</code> command allows you to execute a command when a signal is received by your script.</p>
 <p>Syntax</p>
-<div class="highlight"><pre><span></span><code><span class="nb">trap</span> arg signals
+<div class="highlight"><pre><span></span><code>trap arg signals
 </code></pre></div>
 
 <p>where</p>
@@ -2002,17 +2000,17 @@ $ <span class="nb">false</span> <span class="o">||</span> <span class="nb">echo<
 <li>"arg" is a command to execute when one of the signals is received</li>
 </ul>
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="nb">trap</span> <span class="s2">&quot;rm </span><span class="nv">$TEMP_FILE</span><span class="s2">; exit&quot;</span> SIGHUP SIGINT SIGTERM
+<div class="highlight"><pre><span></span><code>trap &quot;rm $TEMP_FILE; exit&quot; SIGHUP SIGINT SIGTERM
 </code></pre></div>
 
 <p>It is a good practice to create a function that is called when you want to perform any actions at the end of your script in response to a signal.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># housekeeping</span>
-clean_up<span class="o">()</span> <span class="o">{</span>
-    rm <span class="nv">$TEMP_FILE</span>
-    <span class="nb">exit</span>
-<span class="o">}</span>
+<div class="highlight"><pre><span></span><code># housekeeping
+clean_up() {
+    rm $TEMP_FILE
+    exit
+}
 
-<span class="nb">trap</span> clean_up SIGHUP SIGINT SIGTERM
+trap clean_up SIGHUP SIGINT SIGTERM
 </code></pre></div>
 
 <h4 id="sigkill-and-lock-files"><code>SIGKILL</code> and lock files<a class="headerlink" href="#sigkill-and-lock-files" title="Permanent link">&para;</a></h4>
@@ -2024,13 +2022,13 @@ clean_up<span class="o">()</span> <span class="o">{</span>
 <p>Just like we use <code>$()</code> to use the output of a command as input to other commands,
 the <code>&lt;()</code> is used to get the output of a command and treat it as a <em>file,</em> for use with commands/programs that take files as input.</p>
 <p>Example</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Consider</span>
+<div class="highlight"><pre><span></span><code># Consider
 $ grep somestring file1 &gt; /tmp/a
 $ grep somestring file2 &gt; /tmp/b
 $ diff /tmp/a /tmp/b
 
-<span class="c1"># Replace by</span>
-$ diff &lt;<span class="o">(</span>grep somestring file1<span class="o">)</span> &lt;<span class="o">(</span>grep something file2<span class="o">)</span>
+# Replace by
+$ diff &lt;(grep somestring file1) &lt;(grep something file2)
 </code></pre></div>
                 
               
