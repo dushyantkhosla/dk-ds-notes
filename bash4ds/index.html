@@ -413,6 +413,144 @@
 <blockquote>
 <p>If the last character of your shell prompt is <code>#</code> rather than <code>$</code>, you are operating as the <em>superuser</em>. This means that you have administrative privileges. This can be potentially dangerous, since you are able to delete or overwrite any file on the system.</p>
 </blockquote>
+<div class="toc">
+<ul>
+<li><a href="#introduction-to-shell-programming-for-data-scientists">Introduction to Shell Programming for Data Scientists</a><ul>
+<li><a href="#01-1-files-and-navigation">01-1 Files and Navigation</a></li>
+<li><a href="#01-2-links">01-2 Links</a></li>
+<li><a href="#01-3-commands">01-3 Commands</a><ul>
+<li><a href="#exit-status">Exit Status</a></li>
+<li><a href="#inspecting-commands">Inspecting Commands</a></li>
+</ul>
+</li>
+<li><a href="#01-4-wildcards">01-4 Wildcards</a></li>
+</ul>
+</li>
+<li><a href="#02-io-redirection">02 - I/O Redirection</a><ul>
+<li><a href="#standard-output">Standard Output</a></li>
+<li><a href="#standard-input">Standard Input</a></li>
+<li><a href="#pipelines">Pipelines</a></li>
+<li><a href="#filters">Filters</a></li>
+</ul>
+</li>
+<li><a href="#03-expansion">03 - Expansion</a><ul>
+<li><a href="#03-1-wildcards">03-1 Wildcards</a></li>
+<li><a href="#03-2-arithmetic-expansion">03-2 Arithmetic Expansion</a></li>
+<li><a href="#03-3-brace-expansion">03-3 Brace Expansion</a></li>
+<li><a href="#03-4-parameter-expansion">03-4 Parameter Expansion</a></li>
+<li><a href="#03-5-command-expansion">03-5 Command Expansion</a></li>
+<li><a href="#03-6-quoting">03-6 Quoting</a><ul>
+<li><a href="#double-quotes">Double Quotes</a></li>
+<li><a href="#single-quotes">Single Quotes</a></li>
+<li><a href="#escaping-characters">Escaping Characters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#04-permissions">04 - Permissions</a><ul>
+<li><a href="#04-1-file-permissions">04-1 File Permissions</a><ul>
+<li><a href="#chmod">chmod</a></li>
+</ul>
+</li>
+<li><a href="#04-2-directory-permissions">04-2 Directory Permissions</a><ul>
+<li><a href="#chown">chown</a></li>
+<li><a href="#chgrp">chgrp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#06-job-control">06 - Job Control</a><ul>
+<li><a href="#06-1-working-with-processes">06-1 Working with Processes</a><ul>
+<li><a href="#starting-suspending-resuming">Starting, Suspending, Resuming</a></li>
+<li><a href="#listing">Listing</a></li>
+<li><a href="#killing">Killing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#07-scripting">07 - Scripting</a><ul>
+<li><a href="#07-1-hello-bash">07-1 Hello Bash</a><ul>
+<li><a href="#create-the-script">Create the script</a></li>
+<li><a href="#set-permissions">Set Permissions</a></li>
+<li><a href="#add-scripts-directory-to-path">Add scripts directory to PATH</a></li>
+</ul>
+</li>
+<li><a href="#07-2-startup-files-environment">07-2 Startup Files &amp; Environment</a><ul>
+<li><a href="#what-happens-when-a-user-logs-in">What happens when a user logs in?</a></li>
+</ul>
+</li>
+<li><a href="#07-3-aliases">07-3 Aliases</a></li>
+<li><a href="#07-4-functions">07-4 Functions</a></li>
+<li><a href="#07-5-here-scripts">07-5 Here Scripts</a></li>
+<li><a href="#07-6-using-variables-in-scripts">07-6 Using Variables in Scripts</a><ul>
+<li><a href="#creating-variables">Creating variables</a></li>
+<li><a href="#whitespace">Whitespace</a></li>
+<li><a href="#using-variables">Using variables</a></li>
+<li><a href="#defaults">Defaults</a><ul>
+<li><a href="#using-default-values">Using default values</a></li>
+<li><a href="#setting-default-values">Setting default values</a></li>
+</ul>
+</li>
+<li><a href="#environment-variables">Environment Variables</a></li>
+<li><a href="#variable-scoping">Variable Scoping</a></li>
+<li><a href="#declare-and-local">declare and local</a></li>
+<li><a href="#export">export</a></li>
+</ul>
+</li>
+<li><a href="#07-7-using-commands-in-scripts">07-7 Using commands in Scripts</a></li>
+<li><a href="#07-8-shell-functions">07-8 Shell Functions</a></li>
+</ul>
+</li>
+<li><a href="#08-flow-control">08 - Flow Control</a><ul>
+<li><a href="#08-1-if">08-1 if</a><ul>
+<li><a href="#exit">exit</a></li>
+<li><a href="#testing-for-superuser">Testing for superuser</a></li>
+</ul>
+</li>
+<li><a href="#08-2-case">08-2 case</a></li>
+<li><a href="#08-3-loops">08-3 Loops</a><ul>
+<li><a href="#while">while</a></li>
+<li><a href="#until">until</a></li>
+<li><a href="#for">for</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#09-troubleshooting">09 - Troubleshooting</a><ul>
+<li><a href="#advice-for-troubleshooting">Advice for Troubleshooting</a></li>
+<li><a href="#empty-variables">Empty Variables</a></li>
+<li><a href="#missing-quotes">Missing Quotes</a></li>
+<li><a href="#the-set-command">The set command</a></li>
+</ul>
+</li>
+<li><a href="#10-user-input-and-arithmetic">10 - User Input and Arithmetic</a><ul>
+<li><a href="#read">read</a></li>
+<li><a href="#read-with-timeout">read with timeout</a></li>
+<li><a href="#integer-arithmetic">Integer Arithmetic</a></li>
+</ul>
+</li>
+<li><a href="#11-positional-parameters">11 - Positional Parameters</a><ul>
+<li><a href="#defaults-for-parameters">Defaults for parameters</a></li>
+<li><a href="#the-shift-command">The shift command</a></li>
+<li><a href="#looping-through-arguments">Looping through arguments</a></li>
+<li><a href="#the-getopts-command">The getopts command</a></li>
+</ul>
+</li>
+<li><a href="#12-error-handling">12 - Error Handling</a><ul>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#checking-the-exit-status-with">Checking the Exit Status with $?</a></li>
+<li><a href="#an-error-exit-function">An error exit function</a></li>
+<li><a href="#and-or-lists">AND, OR lists</a></li>
+<li><a href="#cleaning-up-with-trap">Cleaning up with trap</a></li>
+<li><a href="#sigkill-and-lock-files">SIGKILL and lock files</a></li>
+</ul>
+</li>
+<li><a href="#13-bash-tricks">13 - Bash Tricks</a><ul>
+<li><a href="#using">Using &lt;()</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <h2 id="01-1-files-and-navigation">01-1 Files and Navigation<a class="headerlink" href="#01-1-files-and-navigation" title="Permanent link">&para;</a></h2>
 <p>The files on a Linux system are arranged in what is called a <em>hierarchical directory structure</em>. This means that they are organized in a tree-like pattern of <em>directories</em> (called folders in other systems), which may contain files and other directories. The first directory in the file system is called the <em>root directory</em>.</p>
 <table>
